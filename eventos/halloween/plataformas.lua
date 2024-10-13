@@ -18,7 +18,7 @@ local posicionPrimeraPlataforma = {
 -- distancia entre plataformas a la derecha y atras
 local distanciaEntrePlataformas = 6
 local cantidadColumnas = 3
-local cantidadFilas = 18
+local cantidadFilas = 21
 
 local function invocarPlataformas(creature)
     creature:SendAreaRaidNotification("El evento ha comenzado, buena suerte!", 150)
