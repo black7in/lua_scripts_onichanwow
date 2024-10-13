@@ -16,12 +16,12 @@ local posicionPrimeraPlataforma = {
 }
 
 -- distancia entre plataformas a la derecha y atras
-local distanciaEntrePlataformas = 8
+local distanciaEntrePlataformas = 7
 local cantidadColumnas = 3
-local cantidadFilas = 15
+local cantidadFilas = 18
 
 local function invocarPlataformas(creature)
-    creature:SendAreaRaidNotification("El evento ha comenzado, buena suerte!", 100)
+    creature:SendAreaRaidNotification("El evento ha comenzado, buena suerte!", 150)
     local xOriginal = posicionPrimeraPlataforma.x
     local yOriginal = posicionPrimeraPlataforma.y
     local zOriginal = posicionPrimeraPlataforma.z
@@ -64,11 +64,11 @@ end
 
 local function DesactivarEvento(eventid, delay, repeats, creature)
     -- Eliminar todas las plataformas
-    local gameObjects = creature:GetGameObjectsInRange(100)
+    local gameObjects = creature:GetGameObjectsInRange(150)
     for i, go in ipairs(gameObjects) do
         go:Despawn()
     end
-    creature:SendAreaRaidNotification("Tiempo Agotado, Empezar denuevo", 100)
+    creature:SendAreaRaidNotification("Tiempo Agotado, Empezar denuevo", 150)
     estadoEvento = "inactivo"
     creature:RemoveEvents()
 end
@@ -78,27 +78,27 @@ local function BuenaSuerte(eventid, delay, repeats, creature)
 end
 
 local function QuedanCuatroMinutos(eventid, delay, repeats, creature)
-    creature:SendAreaRaidNotification("Quedan 4 minutos para que las plataformas caigan!", 100)
+    creature:SendAreaRaidNotification("Quedan 4 minutos para que las plataformas caigan!", 150)
 end
 
 local function QuedanTresMinutos(eventid, delay, repeats, creature)
-    creature:SendAreaRaidNotification("Quedan 3 minutos para que las plataformas caigan!", 100)
+    creature:SendAreaRaidNotification("Quedan 3 minutos para que las plataformas caigan!", 150)
 end
 
 local function QuedanDosMinutos(eventid, delay, repeats, creature)
-    creature:SendAreaRaidNotification("Quedan 2 minutos para que las plataformas caigan!", 100)
+    creature:SendAreaRaidNotification("Quedan 2 minutos para que las plataformas caigan!", 150)
 end
 
 local function QuedaUnMinuto(eventid, delay, repeats, creature)
-    creature:SendAreaRaidNotification("Queda 1 minuto para que las plataformas caigan!", 100)
+    creature:SendAreaRaidNotification("Queda 1 minuto para que las plataformas caigan!", 150)
 end
 
 local function QuedanTreintaSegundos(eventid, delay, repeats, creature)
-    creature:SendAreaRaidNotification("Quedan 30 segundos para que las plataformas caigan!", 100)
+    creature:SendAreaRaidNotification("Quedan 30 segundos para que las plataformas caigan!", 150)
 end
 
 local function QuedanDiezSegundos(eventid, delay, repeats, creature)
-    creature:SendAreaRaidNotification("Quedan 10 segundos para que las plataformas caigan!", 100)
+    creature:SendAreaRaidNotification("Quedan 10 segundos para que las plataformas caigan!", 150)
 end
 
 
@@ -109,9 +109,9 @@ local function OnGossipHello(event, player, creature)
     player:GossipMenuAddItem(0, "Adios", 0, 2)
     -- Test invocar plataformas
     if player:IsGM() then
-        player:GossipMenuAddItem(0, "Invocar plataformas", 0, 3)
+        player:GossipMenuAddItem(0, "Invocar plataformas Test Only GM No tocar", 0, 3)
     -- test eliminar paltaformas
-        player:GossipMenuAddItem(0, "Eliminar plataformas", 0, 4)
+        player:GossipMenuAddItem(0, "Eliminar plataformas Test Only GM No tocar", 0, 4)
     end
     player:GossipSendMenu(1, creature, 200)
 end
@@ -141,7 +141,7 @@ local function OnGossipSelect(event, player, creature, sender, intid, code, menu
     end
     if (intid == 4) then
         -- Eliminar todas las plataformas
-        local gameObjects = creature:GetGameObjectsInRange(100)
+        local gameObjects = creature:GetGameObjectsInRange(150)
         for i, go in ipairs(gameObjects) do
             go:Despawn()
         end
