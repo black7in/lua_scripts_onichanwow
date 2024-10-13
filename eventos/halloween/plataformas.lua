@@ -21,6 +21,7 @@ local cantidadColumnas = 3
 local cantidadFilas = 10
 
 local function invocarPlataformas(creature)
+    creature:SendAreaRaidNotification("El evento ha comenzado, buena suerte!", 100)
     local xOriginal = posicionPrimeraPlataforma.x
     local yOriginal = posicionPrimeraPlataforma.y
     local zOriginal = posicionPrimeraPlataforma.z
@@ -73,7 +74,7 @@ local function DesactivarEvento(eventid, delay, repeats, creature)
 end
 
 local function BuenaSuerte(eventid, delay, repeats, creature)
-    creature:SendAreaRaidNotification("Te deseo buena suerte, solo tienes 5 minutos!", 100)
+    creature:SendUnitSay("Te deseo buena suerte, solo tienes 5 minutos!", 0)
 end
 
 local function QuedanCuatroMinutos(eventid, delay, repeats, creature)
@@ -118,7 +119,7 @@ end
 local function OnGossipSelect(event, player, creature, sender, intid, code, menuid)
     if (intid == 1) then
         if estadoEvento == "inactivo" then
-            creature:CastSpell(creature, spellOpenPortal, true)
+            creature:CastSpell(creature, spellOpenPortal, false)
             creature:RegisterEvent(BuenaSuerte, 2000)
             creature:RegisterEvent(ActivarEvento, 4000) -- Se activa el evento en 4 segundos
             creature:RegisterEvent(QuedanCuatroMinutos, 60000) -- Quedan 4 minutos
