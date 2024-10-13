@@ -64,7 +64,12 @@ end
 
 local function DesactivarEvento(eventid, delay, repeats, creature)
     -- Eliminar todas las plataformas
-    local gameObjects = creature:GetGameObjectsInRange(150)
+    local gameObjects = creature:GetGameObjectsInRange(150, plataformaBuena)
+    for i, go in ipairs(gameObjects) do
+        go:Despawn()
+    end
+
+    gameObjects = creature:GetGameObjectsInRange(150, plataformaMala)
     for i, go in ipairs(gameObjects) do
         go:Despawn()
     end
