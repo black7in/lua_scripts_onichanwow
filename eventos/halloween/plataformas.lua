@@ -11,7 +11,7 @@ local estadoEvento = "inactivo"
 local posicionPrimeraPlataforma = {
     x = -10914.74,
     y = -1663.81,
-    z = -184.1033,
+    z = 184.1033,
     o = 3.0385
 }
 
