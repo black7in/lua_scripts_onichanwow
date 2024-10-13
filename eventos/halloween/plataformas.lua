@@ -18,7 +18,7 @@ local posicionPrimeraPlataforma = {
 -- distancia entre plataformas a la derecha y atras
 local distanciaEntrePlataformas = 8
 local cantidadColumnas = 3
-local cantidadFilas = 10
+local cantidadFilas = 15
 
 local function invocarPlataformas(creature)
     creature:SendAreaRaidNotification("El evento ha comenzado, buena suerte!", 100)
@@ -155,7 +155,7 @@ RegisterCreatureGossipEvent(npcEntry, 2, OnGossipSelect)
 
 
 local function PlataformaOnAIUpdate(event, go, diff)
-    if estadoEvento == "evento" then
+    if estadoEvento == "activo" then
         local playersInRange = go:GetPlayersInRange(-1)
         if #playersInRange > 0 then go:Despawn() end
     end
