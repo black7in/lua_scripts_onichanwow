@@ -114,9 +114,9 @@ local function OnGossipHello(event, player, creature)
     player:GossipMenuAddItem(0, "Adios", 0, 2)
     -- Test invocar plataformas
     if player:IsGM() then
-        player:GossipMenuAddItem(0, "Invocar plataformas Test Only GM No tocar", 0, 3)
+        --player:GossipMenuAddItem(0, "Invocar plataformas Test Only GM No tocar", 0, 3)
     -- test eliminar paltaformas
-        player:GossipMenuAddItem(0, "Eliminar plataformas Test Only GM No tocar", 0, 4)
+        --player:GossipMenuAddItem(0, "Eliminar plataformas Test Only GM No tocar", 0, 4)
     end
     player:GossipSendMenu(1, creature, 200)
 end
@@ -146,7 +146,12 @@ local function OnGossipSelect(event, player, creature, sender, intid, code, menu
     end
     if (intid == 4) then
         -- Eliminar todas las plataformas
-        local gameObjects = creature:GetGameObjectsInRange(150)
+        local gameObjects = creature:GetGameObjectsInRange(150, plataformaBuena)
+        for i, go in ipairs(gameObjects) do
+            go:Despawn()
+        end
+    
+        gameObjects = creature:GetGameObjectsInRange(150, plataformaMala)
         for i, go in ipairs(gameObjects) do
             go:Despawn()
         end
