@@ -23,6 +23,14 @@ local horasObjetivo = 20
 local archivo = "/root/server/bin/lua_scripts/eventos/semanal/estado.data"
 
 local function verificarEstado()
+    fechaFin = datetimeToUnix(fechaFin)
+    -- verificamos si existe una fecha guardada
+    local fechaGuardada = cargarVariable(archivo)
+    if fechaGuardada then
+        fechaInicio = datetimeToUnix(fechaGuardada)
+        estado = "activo"
+    end
+
     local fechaActual = os.time()
     if fechaActual >= fechaFin then -- expiro el tiempo
         estado = "expiro"
@@ -31,7 +39,7 @@ end
 
 local function OnGossipHello(event, player, creature)
     player:GossipClearMenu()
-    --verificarEstado()
+    verificarEstado()
     if estado == "expiro" then
         player:GossipMenuAddItem(0, "Reclamar premio", 0, 1)
     end
@@ -51,7 +59,7 @@ local function OnGossipSelect(event, player, creature, sender, intid, code, menu
             player:SendBroadcastMessage("Se ha activado el evento semanal")
             local msg = "|CFF00FF00El evento semanal ha comenzado! Para ganar solo debes cumplir " .. horasObjetivo .. " horas de juego apartir de ahora. El evento finaliza el " .. unixToDatetime(fechaFin) .. ". Buena suerte!|r"
             SendWorldRaidNotification(msg)
-            fechaInicio = os.time()
+            --fechaInicio = os.time()
             -- guardar fecha
             guardarVariable(unixToDatetime(fechaInicio), archivo)
             estado = "activo"
@@ -67,16 +75,3 @@ end
 
 RegisterCreatureGossipEvent(npcEntry, 1, OnGossipHello)
 RegisterCreatureGossipEvent(npcEntry, 2, OnGossipSelect)
-
-
-local function load()
-    fechaFin = datetimeToUnix(fechaFin)
-    -- verificamos si existe una fecha guardada
-    local fechaGuardada = cargarVariable(archivo)
-    if fechaGuardada then
-        fechaInicio = datetimeToUnix(fechaGuardada)
-        estado = "activo"
-    end
-end
-
---load()
