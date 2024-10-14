@@ -40,6 +40,9 @@ local function OnGossipHello(event, player, creature)
     if player:IsGM() and estado == "inactivo" then
         player:GossipMenuAddItem(0, "Activar evento", 0, 2)
     end
+    if player:IsGM() and estado == "expiro" then
+        player:GossipMenuAddItem(0, "Reiniciar evento", 0, 4)
+    end
     player:GossipMenuAddItem(0, "Adios", 0, 3)
     player:GossipSendMenu(1, creature, 0)
 end
@@ -65,6 +68,12 @@ local function OnGossipSelect(event, player, creature, sender, intid, code, menu
     end
     if intid == 3 then
         player:SendUnitSay("Adios!", 0)
+    end
+    if intid == 4 then
+        cambiarVariableEnv(archivo, "FECHA_INICIO", nil)
+        cambiarVariableEnv(archivo, "FECHA_FIN", nil)
+        estado = "inactivo"
+        player:SendUnitSay("Evento reiniciado", 0)
     end
     player:GossipComplete()
 end
