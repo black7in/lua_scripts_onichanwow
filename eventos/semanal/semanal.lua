@@ -31,6 +31,12 @@ local function verificarEstado()
     end
 end
 
+local function prepararBaseDeDatos(eventid, delay, repeats, creature)
+    CharDBExecute("INSERT INTO character_promo_semanal (guid, totaltime, premiado) SELECT guid, totaltime, FALSE FROM characters;")
+    estado = "activo"
+    creature:RemoveEvents()
+end
+
 local function OnGossipHello(event, player, creature)
     player:GossipClearMenu()
     verificarEstado()
@@ -61,9 +67,10 @@ local function OnGossipSelect(event, player, creature, sender, intid, code, menu
             --guardarVariable(unixToDatetime(fechaInicio), archivo)
             cambiarVariableEnv(archivo, "FECHA_INICIO", unixToDatetime(fechaInicio))
             cambiarVariableEnv(archivo, "FECHA_FIN", unixToDatetime(fechaFin))
-            estado = "activo"
             local msg = "|CFF00FF00El evento semanal ha comenzado! Para ganar solo debes cumplir " .. horasObjetivo .. " horas de juego apartir de ahora. El evento finaliza el " .. unixToDatetime(fechaFin) .. ". Buena suerte!|r"
             SendWorldRaidNotification(msg)
+            SaveAllPlayers()
+            creature:RegisterEvent(prepararBaseDeDatos, 1000) -- tiempo para el sistema para guardar los datos de los jugadores
         end
     end
     if intid == 3 then
@@ -75,7 +82,8 @@ local function OnGossipSelect(event, player, creature, sender, intid, code, menu
         estado = "inactivo"
         fechaInicio = nil
         fechaFin = nil
-        player:SendUnitSay("Evento reiniciado", 0)
+        CharDBExecute("DELETE FROM character_promo_semanal;")
+        creature:SendUnitSay("Evento reiniciado", 0)
     end
     player:GossipComplete()
 end
