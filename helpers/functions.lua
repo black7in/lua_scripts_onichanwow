@@ -100,6 +100,7 @@ function cargarVariablesEnv(archivo)
 end
 
 function cambiarVariableEnv(archivo, clave, nuevoValor)
+    print("Cambiando variable " .. clave .. " a " .. nuevoValor)
     local file = io.open(archivo, "r")  -- abre el archivo en modo de lectura
     if file then
         local lines = {}
