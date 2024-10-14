@@ -53,7 +53,6 @@ local function IniciarEvento(eventid, delay, repeats, player)
     SendWorldRaidNotification("|CFF00FF00El evento de Buscando a Cecilia ha comenzado|r")
     estado = "activo"
     local cecilia = PerformIngameSpawn( 1, npcEntry, data[lugar].posicion.map, 0, data[lugar].posicion.x, data[lugar].posicion.y, data[lugar].posicion.z, data[lugar].posicion.o )
-    --cecilia:RegisterEvent(EnviarPista, 500)
     lugar = lugar + 1
 end
 
@@ -120,7 +119,9 @@ end
 
 local function OnAIUpdate(event, creature, diff)
     if estado == "activo" then
+        print("Estado activo")
         if not pistaEnviada then
+            print("Enviando pista")
             creature:RegisterEvent(EnviarPista, 1000)
             pistaEnviada = true
         end
