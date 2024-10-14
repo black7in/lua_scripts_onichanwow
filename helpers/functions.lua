@@ -100,18 +100,15 @@ function cargarVariablesEnv(archivo)
 end
 
 function cambiarVariableEnv(archivo, clave, nuevoValor)
-    print("Cambiando variable " .. clave .. " a " .. nuevoValor)
     local file = io.open(archivo, "r")  -- abre el archivo en modo de lectura
     if file then
         local lines = {}
         for line in file:lines() do  -- lee el archivo línea por línea
-            print("Leyendo línea: " .. line)  -- imprime la línea que se está leyendo
             local key, value = line:match("^(%w+_?%w*)=(.*)")  -- ajusta la expresión regular para capturar la clave y el valor
             if key == clave then
                 -- Si la clave coincide, cambia el valor
                 local nuevaLinea = clave .. '="' .. nuevoValor .. '"'
                 table.insert(lines, nuevaLinea)
-                print("Cambiada línea a: " .. nuevaLinea)
             else
                 -- Si no, mantiene la línea original
                 table.insert(lines, line)
@@ -122,7 +119,6 @@ function cambiarVariableEnv(archivo, clave, nuevoValor)
         -- Ahora, escribe de nuevo el archivo con las líneas modificadas
         file = io.open(archivo, "w")  -- abre el archivo en modo de escritura
         for _, line in ipairs(lines) do
-            print("Escribiendo línea: " .. line)  -- imprime la línea que se está escribiendo
             file:write(line .. "\n")  -- escribe cada línea en el archivo
         end
         file:close()  -- cierra el archivo

@@ -25,7 +25,7 @@ local archivo = "/root/server/bin/lua_scripts/eventos/semanal/estado.data"
 local function verificarEstado()
     local fechaActual = os.time()
     if fechaFin then
-        if fechaActual >= fechaFin and estado == "activo" then -- expiro el tiempo
+        if fechaActual >= fechaFin then -- expiro el tiempo
             estado = "expiro"
         end
     end
