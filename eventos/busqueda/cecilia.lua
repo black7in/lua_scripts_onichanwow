@@ -16,31 +16,36 @@ local data = {
         posicion = { map = 13, x = 21.772, y = -3.893, z = -144.708, o = 1.492},
         pista = "La primera pista es: 'El que no tiene boca, tiene que comer'",
         premio = "El premio es: 100 monedas de oro",
-        idPremio = 123
+        idPremio = 123,
+        cantidad = 1
     },
     [2] = {
         posicion = { map = 13, x = 29.576, y = -3.950, z = -144.709, o = 1.496},
         pista = "La primera pista es: 'El que no tiene boca, tiene que comer'",
         premio = "El premio es: 100 monedas de oro",
-        idPremio = 123
+        idPremio = 123,
+        cantidad = 1
     },
     [3] = {
         posicion = { map = 13, x = 38.726, y = -4.124, z = -144.709, o = 1.590},
         pista = "La primera pista es: 'El que no tiene boca, tiene que comer'",
         premio = "El premio es: 100 monedas de oro",
-        idPremio = 123
+        idPremio = 123,
+        cantidad = 1
     },
     [4] = {
         posicion = { map = 13, x = 48.036, y = -4.367, z = -144.709, o = 1.708},
         pista = "La primera pista es: 'El que no tiene boca, tiene que comer'",
         premio = "El premio es: 100 monedas de oro",
-        idPremio = 123
+        idPremio = 123,
+        cantidad = 1
     },
     [5] = {
         posicion = { map = 13, x = 56.708, y = -4.392, z = -144.709, o = 1.547},
         pista = "La primera pista es: 'El que no tiene boca, tiene que comer'",
         premio = "El premio es: 100 monedas de oro",
-        idPremio = 123
+        idPremio = 123,
+        cantidad = 1
     }
 }
 
