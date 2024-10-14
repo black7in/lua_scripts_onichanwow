@@ -27,3 +27,30 @@ function obtenerNuevaCoordenada(x, y, z, orientacion, distancia, direccion)
     -- Retornar las nuevas coordenadas
     return nuevo_x, nuevo_y, nuevo_z
 end
+
+function datetimeToUnix(datetime_str)
+    -- Parsea la cadena para extraer los campos de la fecha y hora
+    local day, month, year, hour, min, sec = datetime_str:match("(%d+)/(%d+)/(%d+) (%d+):(%d+):(%d+)")
+
+    -- Crea una tabla con los campos de la fecha y hora
+    local datetime_tbl = {
+        day = tonumber(day),
+        month = tonumber(month),
+        year = tonumber(year),
+        hour = tonumber(hour),
+        min = tonumber(min),
+        sec = tonumber(sec)
+    }
+
+    -- Convierte la tabla a tiempo Unix
+    local unixtime = os.time(datetime_tbl)
+
+    return unixtime
+end
+
+function unixToDatetime(unixtime)
+    -- Formatea el tiempo Unix como una cadena de fecha y hora
+    local datetime_str = os.date("%d/%m/%Y %H:%M:%S", unixtime)
+
+    return datetime_str
+end

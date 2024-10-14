@@ -136,7 +136,6 @@ RegisterCreatureEvent(npcEntry, 7, OnAIUpdate)
 RegisterCreatureGossipEvent(npcEntry, 1, OnGossipHello)
 RegisterCreatureGossipEvent(npcEntry, 2, OnGossipSelect)
 
-
 local cmd = "activar cecilia"
 
 local function OnCommand(event, player, command)
