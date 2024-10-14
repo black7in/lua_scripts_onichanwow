@@ -58,13 +58,13 @@ local function IniciarEvento(eventid, delay, repeats, player)
 end
 
 local function CargarTeleportCecilia(eventid, delay, repeats, creature)
-    creature:CastSpell(creature, spellOpenPortal, true)
+    creature:CastSpell(creature, spellOpenPortal, false)
     creature:SendUnitSay("Me has encontrado! la proxima no sera tan facil jejeje...", 0)
 end
 
 local function TeleportCecilia(eventid, delay, repeats, creature)
     creature:RemoveEvents()
-    creature:CastSpell(creature, spellTeleport, true)
+    creature:CastSpell(creature, spellTeleport, false)
     creature:SendUnitSay("Hasta la proxima!", 0)
     creature:DespawnOrUnsummon(0)
     if lugar <= #data then
