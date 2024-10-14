@@ -29,13 +29,8 @@ function obtenerNuevaCoordenada(x, y, z, orientacion, distancia, direccion)
 end
 
 function datetimeToUnix(datetime_str)
-    -- Utiliza una expresión regular para capturar el formato DD/MM/YYYY HH:MM:SS
-    local day, month, year, hour, min, sec = datetime_str:match("(%d%d)/(%d%d)/(%d%d%d%d) (%d%d):(%d%d):(%d%d)")
-
-    -- Comprueba que se haya extraído correctamente la fecha
-    if not (day and month and year and hour and min and sec) then
-        error("Formato de fecha inválido, se esperaba DD/MM/YYYY HH:MM:SS")
-    end
+    -- Parsea la cadena para extraer los campos de la fecha y hora
+    local day, month, year, hour, min, sec = datetime_str:match("(%d+)/(%d+)/(%d+) (%d+):(%d+):(%d+)")
 
     -- Crea una tabla con los campos de la fecha y hora
     local datetime_tbl = {

@@ -31,7 +31,7 @@ end
 
 local function OnGossipHello(event, player, creature)
     player:GossipClearMenu()
-    verificarEstado()
+    --verificarEstado()
     if estado == "expiro" then
         player:GossipMenuAddItem(0, "Reclamar premio", 0, 1)
     end
@@ -58,6 +58,8 @@ local function OnGossipSelect(event, player, creature, sender, intid, code, menu
         end
     end
     if intid == 3 then
+        fechaFin = datetimeToUnix(fechaFin)
+        print("fechaFin: " .. fechaFin)
         player:SendUnitSay("Adios!", 0)
     end
     player:GossipComplete()
@@ -77,4 +79,4 @@ local function load()
     end
 end
 
-load()
+--load()
