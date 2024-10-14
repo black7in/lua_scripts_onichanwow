@@ -72,7 +72,9 @@ local function OnGossipHello(event, player, creature)
                 totaltime_actual = row["totaltime"]
             end
         end
+        print("totaltime_actual: " .. totaltime_actual)
         local totaltime_actual = totaltime_actual - data[player:GetGUIDLow()].totaltime
+        print("totaltime_actual: " .. totaltime_actual)
         msg = msg .. "Tus horas jugadas: " ..tiempoFormateado(totaltime_actual) .. "\n"
     end
     if estado == "expiro" then
