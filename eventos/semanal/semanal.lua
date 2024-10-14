@@ -46,7 +46,7 @@ local function OnCommand(event, player, command)
             estado = "activo"
             player:SendBroadcastMessage("Se ha activado el evento semanal")
             local msg = "El evento semanal ha comenzado! Para ganar solo debes cumplir " .. horasObjetivo .. " horas de juego. El evento finaliza el " .. fechaFin .. ". Buena suerte!"
-            SendAreaRaidNotification(msg)
+            SendWorldRaidNotification(msg)
             fechaInicio = os.time()
             fechaFin = datetimeToUnix(fechaFin)
         end
