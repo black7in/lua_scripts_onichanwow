@@ -54,15 +54,6 @@ function datetimeToUnix(datetime_str)
     return unixtime
 end
 
--- Uso de la función
-local fechaFin = "15/10/2023 11:59:59"
-local unixtime = datetimeToUnix(fechaFin)
-if unixtime == nil then
-    print("Error: no se pudo convertir la fecha de fin a tiempo Unix")
-else
-    print(unixtime)  -- imprime el tiempo Unix correspondiente a la fecha y hora dada
-end
-
 function unixToDatetime(unixtime)
     -- Formatea el tiempo Unix como una cadena de fecha y hora
     local datetime_str = os.date("%d/%m/%Y %H:%M:%S", unixtime)
