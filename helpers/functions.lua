@@ -32,6 +32,12 @@ function datetimeToUnix(datetime_str)
     -- Parsea la cadena para extraer los campos de la fecha y hora
     local day, month, year, hour, min, sec = datetime_str:match("(%d+)/(%d+)/(%d+) (%d+):(%d+):(%d+)")
 
+    -- Comprueba si todos los campos se parsearon correctamente
+    if day == nil or month == nil or year == nil or hour == nil or min == nil or sec == nil then
+        print("Error: no se pudo parsear la fecha y hora")
+        return nil
+    end
+
     -- Crea una tabla con los campos de la fecha y hora
     local datetime_tbl = {
         day = tonumber(day),
@@ -46,6 +52,15 @@ function datetimeToUnix(datetime_str)
     local unixtime = os.time(datetime_tbl)
 
     return unixtime
+end
+
+-- Uso de la función
+local fechaFin = "15/10/2023 11:59:59"
+local unixtime = datetimeToUnix(fechaFin)
+if unixtime == nil then
+    print("Error: no se pudo convertir la fecha de fin a tiempo Unix")
+else
+    print(unixtime)  -- imprime el tiempo Unix correspondiente a la fecha y hora dada
 end
 
 function unixToDatetime(unixtime)
