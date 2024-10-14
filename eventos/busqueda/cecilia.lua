@@ -9,32 +9,32 @@ local data = {
     [1] = {
         posicion = { x = 21.772, y = -3.893, z = -144.708, o = 1.492},
         pista = "La primera pista es: 'El que no tiene boca, tiene que comer'",
-        premio = "El premio es: 100 monedas de oro"
-        idPremio = 123;
+        premio = "El premio es: 100 monedas de oro",
+        idPremio = 123
     },
     [2] = {
         posicion = { x = 29.576, y = -3.950, z = -144.709, o = 1.496},
         pista = "La primera pista es: 'El que no tiene boca, tiene que comer'",
-        premio = "El premio es: 100 monedas de oro"
-        idPremio = 123;
+        premio = "El premio es: 100 monedas de oro",
+        idPremio = 123
     },
     [3] = {
         posicion = { x = 38.726, y = -4.124, z = -144.709, o = 1.590},
         pista = "La primera pista es: 'El que no tiene boca, tiene que comer'",
-        premio = "El premio es: 100 monedas de oro"
-        idPremio = 123;
+        premio = "El premio es: 100 monedas de oro",
+        idPremio = 123
     },
     [4] = {
         posicion = { x = 48.036, y = -4.367, z = -144.709, o = 1.708},
         pista = "La primera pista es: 'El que no tiene boca, tiene que comer'",
-        premio = "El premio es: 100 monedas de oro"
-        idPremio = 123;
+        premio = "El premio es: 100 monedas de oro",
+        idPremio = 123
     },
     [5] = {
         posicion = { x = 56.708, y = -4.392, z = -144.709, o = 1.547},
         pista = "La primera pista es: 'El que no tiene boca, tiene que comer'",
-        premio = "El premio es: 100 monedas de oro"
-        idPremio = 123;
+        premio = "El premio es: 100 monedas de oro",
+        idPremio = 123
     }
 }
 
@@ -83,7 +83,6 @@ local cmd = "activar cecilia"
 
 local function OnCommand(event, player, command)
     if command == cmd then
-        player:SendBroadcastMessage("Se ha activado el evento de Cecilia")
         if player:IsGM() and estado == "inactivo" then
             player:SendBroadcastMessage("Se ha activado el evento de Cecilia")
             player:RegisterEvent(IniciarEvento, 1000)
