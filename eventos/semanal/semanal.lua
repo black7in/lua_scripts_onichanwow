@@ -40,7 +40,7 @@ end
 
 local function OnGossipHello(event, player, creature)
     player:GossipClearMenu()
-    verificarEstado()
+    --verificarEstado()
     if estado == "expiro" then
         player:GossipMenuAddItem(0, "Reclamar premio", 0, 1)
     end
