@@ -20,7 +20,7 @@ local fechaFin = "15/10/2023 11:59:59"
 local horasObjetivo = 20
 
 
-local archivo = "/root/server/bin/lua_scripts/semanal/estado.data"
+local archivo = "/root/server/bin/lua_scripts/eventos/semanal/estado.data"
 
 local function verificarEstado()
     local fechaActual = os.time()
