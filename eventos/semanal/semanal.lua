@@ -26,14 +26,15 @@ local function verificarEstado()
     local fechaFinal = datetimeToUnix(fechaFin)
     -- verificamos si existe una fecha guardada
     local fechaGuardada = cargarVariable(archivo)
+
     if fechaGuardada then
         fechaInicio = datetimeToUnix(fechaGuardada)
         estado = "activo"
-    end
 
-    local fechaActual = os.time()
-    if fechaActual >= fechaFinal then -- expiro el tiempo
-        estado = "expiro"
+        local fechaActual = os.time()
+        if fechaActual >= fechaFinal then -- expiro el tiempo
+            estado = "expiro"
+        end
     end
 end
 
