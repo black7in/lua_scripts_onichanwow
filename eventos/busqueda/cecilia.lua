@@ -122,7 +122,6 @@ local function OnAIUpdate(event, creature, diff)
         if tiempo >= tiempoPista then
             tiempo = 0
             pistaEnviada = false
-            creature:RemoveEvents()
         end
         tiempo = tiempo + diff
     end
