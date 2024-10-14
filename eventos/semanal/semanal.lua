@@ -24,7 +24,7 @@ local archivo = "/root/server/bin/lua_scripts/eventos/semanal/estado.data"
 
 local function verificarEstado()
     local fechaActual = os.time()
-    if fechaFin then
+    if fechaFin and fechaFin ~= "" then
         if fechaActual >= fechaFin then -- expiro el tiempo
             estado = "expiro"
         end
@@ -73,6 +73,8 @@ local function OnGossipSelect(event, player, creature, sender, intid, code, menu
         cambiarVariableEnv(archivo, "FECHA_INICIO", "")
         cambiarVariableEnv(archivo, "FECHA_FIN", "")
         estado = "inactivo"
+        fechaInicio = nil
+        fechaFin = nil
         player:SendUnitSay("Evento reiniciado", 0)
     end
     player:GossipComplete()
