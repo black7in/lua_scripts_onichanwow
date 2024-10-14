@@ -23,7 +23,7 @@ local horasObjetivo = 20
 local archivo = "/root/server/bin/lua_scripts/eventos/semanal/estado.data"
 
 local function verificarEstado()
-    fechaFin = datetimeToUnix(fechaFin)
+    local fechaFinal = datetimeToUnix(fechaFin)
     -- verificamos si existe una fecha guardada
     local fechaGuardada = cargarVariable(archivo)
     if fechaGuardada then
@@ -32,7 +32,7 @@ local function verificarEstado()
     end
 
     local fechaActual = os.time()
-    if fechaActual >= fechaFin then -- expiro el tiempo
+    if fechaActual >= fechaFinal then -- expiro el tiempo
         estado = "expiro"
     end
 end
