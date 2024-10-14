@@ -4,6 +4,12 @@ local spellOpenPortal = 67864
 local spellTeleport = 51347
 
 local estado = "inactivo" -- activo -- inactivo -- cargando
+local lugar = 1
+
+local tiempo = 0
+
+local tiempoPista = 10000 -- 10 segundos
+local pistaEnviada = false
 
 local data = {
     [1] = {
@@ -13,36 +19,42 @@ local data = {
         idPremio = 123
     },
     [2] = {
-        posicion = { x = 29.576, y = -3.950, z = -144.709, o = 1.496},
+        posicion = { map = 13, x = 29.576, y = -3.950, z = -144.709, o = 1.496},
         pista = "La primera pista es: 'El que no tiene boca, tiene que comer'",
         premio = "El premio es: 100 monedas de oro",
         idPremio = 123
     },
     [3] = {
-        posicion = { x = 38.726, y = -4.124, z = -144.709, o = 1.590},
+        posicion = { map = 13, x = 38.726, y = -4.124, z = -144.709, o = 1.590},
         pista = "La primera pista es: 'El que no tiene boca, tiene que comer'",
         premio = "El premio es: 100 monedas de oro",
         idPremio = 123
     },
     [4] = {
-        posicion = { x = 48.036, y = -4.367, z = -144.709, o = 1.708},
+        posicion = { map = 13, x = 48.036, y = -4.367, z = -144.709, o = 1.708},
         pista = "La primera pista es: 'El que no tiene boca, tiene que comer'",
         premio = "El premio es: 100 monedas de oro",
         idPremio = 123
     },
     [5] = {
-        posicion = { x = 56.708, y = -4.392, z = -144.709, o = 1.547},
+        posicion = { map = 13, x = 56.708, y = -4.392, z = -144.709, o = 1.547},
         pista = "La primera pista es: 'El que no tiene boca, tiene que comer'",
         premio = "El premio es: 100 monedas de oro",
         idPremio = 123
     }
 }
 
-
+local function EnviarPista(eventid, delay, repeats, creature)
+    SendWorldMessage(data[lugar].pista)
+end
 
 local function IniciarEvento(eventid, delay, repeats, player)
     player:RemoveEvents()
     SendWorldRaidNotification("|CFF00FF00El evento de Buscando a Cecilia ha comenzado|r")
+    estado = "activo"
+    local cecilia = PerformIngameSpawn( 1, npcEntry, data[lugar].posicion.map, 0, data[lugar].posicion.x, data[lugar].posicion.y, data[lugar].posicion.z, data[lugar].posicion.o )
+    --cecilia:RegisterEvent(EnviarPista, 500)
+    lugar = lugar + 1
 end
 
 
@@ -70,7 +82,16 @@ end
 
 local function OnAIUpdate(event, creature, diff)
     if estado == "activo" then
-        --print("estado activo")
+        if not pistaEnviada then
+            creature:RegisterEvent(EnviarPista, 1000)
+            pistaEnviada = true
+        end
+        if tiempo >= tiempoPista then
+            tiempo = 0
+            pistaEnviada = false
+            creature:RemoveEvents()
+        end
+        tiempo = tiempo + diff
     end
 end
 
