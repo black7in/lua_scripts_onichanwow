@@ -15,6 +15,7 @@ local estado = "inactivo"
 
 local fechaInicio
 local fechaFin = "15/10/2023 11:59:59"
+local horasObjetivo = 20
 
 
 
@@ -42,11 +43,12 @@ local cmd = "activar semanal"
 local function OnCommand(event, player, command)
     if command == cmd then
         if player:IsGM() and estado == "inactivo" then
-            player:SendBroadcastMessage("Se ha activado el evento semanal")
-            fechaInicio = os.time()
-            print("Fecha inicio: "..unixToDatetime(fechaInicio))
-            print("Fecha fin: "..datetimeToUnix(fechaFin))
             estado = "activo"
+            player:SendBroadcastMessage("Se ha activado el evento semanal")
+            local msg = "El evento semanal ha comenzado! Para ganar solo debes cumplir " .. horasObjetivo .. " horas de juego. El evento finaliza el " .. fechaFin .. ". Buena suerte!"
+            SendAreaRaidNotification(msg)
+            fechaInicio = os.time()
+            fechaFin = datetimeToUnix(fechaFin)
         end
         return false
     end
