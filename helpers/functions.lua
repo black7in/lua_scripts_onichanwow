@@ -85,12 +85,26 @@ function cargarVariablesEnv(archivo)
     if file then
         local variables = {}
         for line in file:lines() do  -- lee el archivo línea por línea
-            local key, value = line:match("(%w+)=(.*)")  -- parsea la clave y el valor de cada línea
-            if key and (value == nil or value == "") then
-                variables[key] = nil
-            elseif key and value then
+            -- Ignora líneas vacías o comentarios
+            if line:match("^%s*$") or line:match("^#") then
+                goto continue
+            end
+
+            -- Captura clave y valor, permitiendo claves con guiones bajos
+            local key, value = line:match("(%w+_?%w*)=(.*)")
+
+            -- Si el valor está entre comillas, elimínalas
+            if value then
+                value = value:match('^"(.*)"$') or value  -- elimina comillas si existen
+                value = value:match("^%s*(.-)%s*$")  -- elimina espacios extra alrededor del valor
+            end
+
+            -- Guarda la variable en la tabla
+            if key and value then
                 variables[key] = value
             end
+
+            ::continue::
         end
         file:close()  -- cierra el archivo
         return variables
