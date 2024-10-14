@@ -68,11 +68,11 @@ local function TeleportCecilia(eventid, delay, repeats, creature)
     creature:SendUnitSay("Hasta la proxima!", 0)
     creature:DespawnOrUnsummon(0)
     if lugar <= #data then
-        local cecilia = PerformIngameSpawn( 1, npcEntry, data[lugar].posicion.map, 0, data[lugar].posicion.x, data[lugar].posicion.y, data[lugar].posicion.z, data[lugar].posicion.o )
-        lugar = lugar + 1
         estado = "activo"
         pistaEnviada = false
         tiempo = 0
+        local cecilia = PerformIngameSpawn( 1, npcEntry, data[lugar].posicion.map, 0, data[lugar].posicion.x, data[lugar].posicion.y, data[lugar].posicion.z, data[lugar].posicion.o )
+        lugar = lugar + 1
     end
 end
 
@@ -80,6 +80,8 @@ local function CambiarLugarOFinalizar(eventid, delay, repeats, creature)
     if lugar > #data then
         estado = "inactivo"
         lugar = 1
+        pistaEnviada = false
+        tiempo = 0
         SendWorldRaidNotification("|CFF00FF00El evento de Buscando a Cecilia ha finalizado|r")
     else
         SendWorldMessage("Evento Busqueda: Cecilia se esta moviendo a otro lugar!")  
