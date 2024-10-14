@@ -45,7 +45,7 @@ local function OnCommand(event, player, command)
         if player:IsGM() and estado == "inactivo" then
             estado = "activo"
             player:SendBroadcastMessage("Se ha activado el evento semanal")
-            local msg = "El evento semanal ha comenzado! Para ganar solo debes cumplir " .. horasObjetivo .. " horas de juego. El evento finaliza el " .. fechaFin .. ". Buena suerte!"
+            local msg = "|CFF00FF00El evento semanal ha comenzado! Para ganar solo debes cumplir " .. horasObjetivo .. " horas de juego apartir de ahora. El evento finaliza el " .. fechaFin .. ". Buena suerte!|r"
             SendWorldRaidNotification(msg)
             fechaInicio = os.time()
             fechaFin = datetimeToUnix(fechaFin)
