@@ -29,14 +29,9 @@ function obtenerNuevaCoordenada(x, y, z, orientacion, distancia, direccion)
 end
 
 function datetimeToUnix(datetime_str)
+    print(datetime_str)
     -- Parsea la cadena para extraer los campos de la fecha y hora
     local day, month, year, hour, min, sec = datetime_str:match("(%d+)/(%d+)/(%d+) (%d+):(%d+):(%d+)")
-
-    -- Comprueba si todos los campos se parsearon correctamente
-    if day == nil or month == nil or year == nil or hour == nil or min == nil or sec == nil then
-        print("Error: no se pudo parsear la fecha y hora")
-        return nil
-    end
 
     -- Crea una tabla con los campos de la fecha y hora
     local datetime_tbl = {
