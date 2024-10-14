@@ -63,11 +63,29 @@ local function OnGossipHello(event, player, creature)
     msg = msg .. "Acumular " .. horasObjetivo .. " horas de juego: apartir de ".. unixToDatetime(fechaInicio) ..", hasta " .. unixToDatetime(fechaFin) .. " Calendario del servidor.\n\n"
     if estado == "activo" then
         msg = msg .. "Si cumples estos requisitos, podrás reclamar tu recompensa aqui\n"
-        msg = msg .. "Tus horas jugadas: " ..tiempoTranscurridoString(data[player:GetGUIDLow()].totaltime) .. "\n"
+        -- Aqui tenemos un error totaltime no es una fecha es un tiempo en segundos jejeje lo que toca es hacer consulta consultando el nuevo totaltime jejeje y ahi sacar la diferencia
+        local query = CharDBQuery("SELECT totaltime FROM character_promo_semanal WHERE guid = " .. player:GetGUIDLow() .. ";")
+        local totaltime_actual = 0
+        if query then
+            local row = query:GetRow()
+            if row then
+                totaltime_actual = row["totaltime"]
+            end
+        end
+        msg = msg .. "Tus horas jugadas: " ..tiempoTranscurridoString(totaltime_actual - data[player:GetGUIDLow()].totaltime) .. "\n"
     end
     if estado == "expiro" then
         msg = msg .. "El evento ha finalizado, puedes reclamar tu premio aqui\n"
-        msg = msg .. "Tus horas jugadas: " ..tiempoTranscurridoEntre(data[player:GetGUIDLow()].totaltime, fechaFin) .. "\n"
+        -- Aqui tenemos un error totaltime no es una fecha es un tiempo en segundos jejeje lo que toca es hacer consulta consultando el nuevo totaltime jejeje y ahi sacar la diferencia
+        local query = CharDBQuery("SELECT totaltime FROM character_promo_semanal WHERE guid = " .. player:GetGUIDLow() .. ";")
+        local totaltime_actual = 0
+        if query then
+            local row = query:GetRow()
+            if row then
+                totaltime_actual = row["totaltime"]
+            end
+        end
+        msg = msg .. "Tus horas jugadas: " ..tiempoTranscurridoEntre(totaltime_actual - data[player:GetGUIDLow()].totaltime, fechaFin) .. "\n"
     end
     if estado == "expiro" then
         player:GossipMenuAddItem(0, "Reclamar premio", 0, 1)
