@@ -16,7 +16,7 @@ local npcEntry = 70002
 local estado = "inactivo"
 
 local fechaInicio
-local fechaFin = "15/10/2023 11:59:59"
+local fechaFin = "15/10/2024 11:59:59"
 local horasObjetivo = 20
 
 
@@ -52,7 +52,6 @@ local function OnGossipSelect(event, player, creature, sender, intid, code, menu
             local msg = "|CFF00FF00El evento semanal ha comenzado! Para ganar solo debes cumplir " .. horasObjetivo .. " horas de juego apartir de ahora. El evento finaliza el " .. unixToDatetime(fechaFin) .. ". Buena suerte!|r"
             SendWorldRaidNotification(msg)
             fechaInicio = os.time()
-            -- guardar fecha
             guardarVariable(unixToDatetime(fechaInicio), archivo)
             estado = "activo"
         end
@@ -68,12 +67,26 @@ RegisterCreatureGossipEvent(npcEntry, 2, OnGossipSelect)
 
 
 local function load()
-    fechaFin = datetimeToUnix(fechaFin)
-    local fechaGuardada = cargarVariable(archivo)
-    if fechaGuardada then
-        fechaInicio = datetimeToUnix(fechaGuardada)
+    local variables = cargarVariablesEnv(archivo)
+    fechaFin = variables["FECHA_FIN"]
+    fechaInicio = variables["FECHA_INICIO"]
+
+    if fechaInicio then
+        fechaInicio = datetimeToUnix(fechaInicio)
+    end
+
+    if fechaFin then
+        fechaFin = datetimeToUnix(fechaFin)
+    end
+
+    if fechaFin and fechaInicio then
         estado = "activo"
     end
+    --local fechaGuardada = cargarVariable(archivo)
+    --if fechaGuardada then
+    --    fechaInicio = datetimeToUnix(fechaGuardada)
+    --    estado = "activo"
+    --end
 end
 
 load()

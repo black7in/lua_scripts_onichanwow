@@ -79,3 +79,22 @@ function cargarVariable(archivo)
         print("Error al abrir el archivo " .. archivo)
     end
 end
+
+function cargarVariablesEnv(archivo)
+    local file = io.open(archivo, "r")  -- abre el archivo en modo de lectura
+    if file then
+        local variables = {}
+        for line in file:lines() do  -- lee el archivo línea por línea
+            local key, value = line:match("(%w+)=(.*)")  -- parsea la clave y el valor de cada línea
+            if key and (value == nil or value == "") then
+                variables[key] = nil
+            elseif key and value then
+                variables[key] = value
+            end
+        end
+        file:close()  -- cierra el archivo
+        return variables
+    else
+        print("Error al abrir el archivo " .. archivo)
+    end
+end
