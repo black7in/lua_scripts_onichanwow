@@ -51,8 +51,6 @@ local function OnGossipSelect(event, player, creature, sender, intid, code, menu
     if intid == 2 then
         if player:IsGM() and estado == "inactivo" then
             player:SendBroadcastMessage("Se ha activado el evento semanal")
-            local msg = "|CFF00FF00El evento semanal ha comenzado! Para ganar solo debes cumplir " .. horasObjetivo .. " horas de juego apartir de ahora. El evento finaliza el " .. unixToDatetime(fechaFin) .. ". Buena suerte!|r"
-            SendWorldRaidNotification(msg)
             fechaInicio = os.time()
             fechaTabla = os.date("*t", fechaInicio)  -- convierte la fecha a una tabla
             fechaTabla.day = fechaTabla.day + 5  -- aumenta el día en 5
@@ -61,6 +59,8 @@ local function OnGossipSelect(event, player, creature, sender, intid, code, menu
             cambiarVariableEnv(archivo, "FECHA_INICIO", unixToDatetime(fechaInicio))
             cambiarVariableEnv(archivo, "FECHA_FIN", unixToDatetime(fechaFin))
             estado = "activo"
+            local msg = "|CFF00FF00El evento semanal ha comenzado! Para ganar solo debes cumplir " .. horasObjetivo .. " horas de juego apartir de ahora. El evento finaliza el " .. unixToDatetime(fechaFin) .. ". Buena suerte!|r"
+            SendWorldRaidNotification(msg)
         end
     end
     if intid == 3 then
