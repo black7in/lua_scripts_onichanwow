@@ -70,7 +70,11 @@ function cargarVariable(archivo)
     if file then
         local fecha = file:read("*a")  -- lee todo el archivo
         file:close()  -- cierra el archivo
-        return fecha
+        if fecha == "" then  -- si el archivo está vacío
+            return nil
+        else
+            return fecha
+        end
     else
         print("Error al abrir el archivo " .. archivo)
     end
