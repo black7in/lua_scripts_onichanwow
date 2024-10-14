@@ -348,8 +348,6 @@ function crearPersonaje(creature)
     local resultGetNextEntry = WorldDBQuery(sqlGetNextEntry)
     if (resultGetNextEntry) then entry = resultGetNextEntry:GetUInt32(0) end
 
-    print('entry: ' .. entry)
-
     local sqlGetOutfitId =
         "SELECT IFNULL(MAX(`entry`), 50000) + 1 AS next_outfit_id FROM `creature_template_outfits`;"
     local resultGetOutfitId = WorldDBQuery(sqlGetOutfitId)
