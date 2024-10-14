@@ -44,10 +44,6 @@ local data = {
     }
 }
 
-local function EnviarPista(eventid, delay, repeats, creature)
-    SendWorldMessage(data[lugar].pista)
-end
-
 local function IniciarEvento(eventid, delay, repeats, player)
     player:RemoveEvents()
     SendWorldRaidNotification("|CFF00FF00El evento de Buscando a Cecilia ha comenzado|r")
@@ -120,8 +116,7 @@ end
 local function OnAIUpdate(event, creature, diff)
     if estado == "activo" then
         if not pistaEnviada then
-            print("Enviando pista")
-            creature:RegisterEvent(EnviarPista, 1000)
+            SendWorldMessage(data[lugar].pista)
             pistaEnviada = true
         end
         if tiempo >= tiempoPista then
