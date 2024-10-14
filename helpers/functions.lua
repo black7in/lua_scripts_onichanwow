@@ -166,3 +166,14 @@ function tiempoTranscurridoEntre(tiempoUnixInicio, tiempoUnixFin)
     -- Devuelve las horas, minutos y segundos
     return horas .. " horas, " .. minutos .. " minutos, " .. segundos .. " segundos"
 end
+
+function tiempoFormateado(tiempoUnix)
+    -- Calcula las horas, minutos y segundos
+    local horas = math.floor(tiempoUnix / 3600)
+    local diferencia = tiempoUnix % 3600
+    local minutos = math.floor(diferencia / 60)
+    local segundos = diferencia % 60
+
+    -- Devuelve las horas, minutos y segundos
+    return horas .. " horas, " .. minutos .. " minutos, " .. segundos .. " segundos"
+end
