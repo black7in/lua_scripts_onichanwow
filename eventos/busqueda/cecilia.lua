@@ -13,7 +13,7 @@ local pistaEnviada = false
 
 local data = {
     [1] = {
-        posicion = { x = 21.772, y = -3.893, z = -144.708, o = 1.492},
+        posicion = { map = 13, x = 21.772, y = -3.893, z = -144.708, o = 1.492},
         pista = "La primera pista es: 'El que no tiene boca, tiene que comer'",
         premio = "El premio es: 100 monedas de oro",
         idPremio = 123
