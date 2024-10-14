@@ -9,6 +9,8 @@
  "\n\nPremio 3: " << sServerSystem->GetItemIcon(47241, 20, 20, 0, -1) << sServerSystem->GetItemLink(47241) << "\nCantidad: " << 20;
 
 ]]
+require("helpers/functions")
+
 local npcEntry = 70002
 
 local estado = "inactivo"
