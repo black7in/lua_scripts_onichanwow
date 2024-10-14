@@ -150,7 +150,7 @@ function tiempoTranscurridoString(tiempoUnix)
     local minutos = math.floor(diferencia / 60)
     local segundos = diferencia % 60
 
-    return horas, minutos, segundos
+    return horas .. " horas, " .. minutos .. " minutos, " .. segundos .. " segundos"
 end
 
 function tiempoTranscurridoEntre(tiempoUnixInicio, tiempoUnixFin)
@@ -164,5 +164,5 @@ function tiempoTranscurridoEntre(tiempoUnixInicio, tiempoUnixFin)
     local segundos = diferencia % 60
 
     -- Devuelve las horas, minutos y segundos
-    return horas, minutos, segundos
+    return horas .. " horas, " .. minutos .. " minutos, " .. segundos .. " segundos"
 end
