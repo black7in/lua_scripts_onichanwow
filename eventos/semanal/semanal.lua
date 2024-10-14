@@ -60,14 +60,14 @@ local function OnGossipHello(event, player, creature)
 
     -- Descripcion del evento
     local msg = "Evento semanal, para ganar solo debes cumplir los siguientes objetivos:\n\n"
-    msg = msg .. "Acumular " .. horasObjetivo .. " horas de juego: apartir de ".. unixToDatetime(fechaInicio) ..", hasta " .. unixToDatetime(fechaFin) .. " Calendario del servidor.\n\n"
+    msg = msg .. "Acumular " .. horasObjetivo .. " horas de juego.\n\nApartir de: ".. unixToDatetime(fechaInicio) .."\nHasta: " .. unixToDatetime(fechaFin) .. "\nCalendario del servidor.\n\n"
     if estado == "activo" then
         msg = msg .. "Si cumples estos requisitos, podrás reclamar tu recompensa aqui.\n\n"
         local totaltime_actual = player:GetTotalPlayedTime()
         totaltime_actual = totaltime_actual - data[player:GetGUIDLow()].totaltime
         msg = msg .. "Tus horas jugadas: " ..tiempoFormateado(totaltime_actual) .. "\n"
     end
-    
+
     if estado == "expiro" then
         msg = msg .. "El evento ha finalizado, puedes reclamar tu premio aqui\n"
         -- Aqui tenemos un error totaltime no es una fecha es un tiempo en segundos jejeje lo que toca es hacer consulta consultando el nuevo totaltime jejeje y ahi sacar la diferencia
