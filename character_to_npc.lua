@@ -1,4 +1,4 @@
-local NpcId = 100005
+local NpcId = 90023
 local MenuId = 123 -- Unique ID to recognice player gossip menu among others
 
 -- Rango de NPCS previamente creados en la base de datos creature_template
@@ -403,7 +403,7 @@ function lanzarError(creature, mensaje)
     reset()
 end
 
---RegisterCreatureGossipEvent(NpcId, 1, OnGossipHello)
---RegisterCreatureGossipEvent(NpcId, 2, OnGossipSelect)
+RegisterCreatureGossipEvent(NpcId, 1, OnGossipHello)
+RegisterCreatureGossipEvent(NpcId, 2, OnGossipSelect)
 
---RegisterCreatureEvent(NpcId, 7, creatureAI)
+RegisterCreatureEvent(NpcId, 7, creatureAI)
