@@ -16,7 +16,7 @@ local npcEntry = 70002
 local estado = "inactivo"
 
 local fechaInicio
-local fechaFin = "15/10/2024 11:59:59"
+local fechaFin = "15/10/2023 11:59:59"
 local horasObjetivo = 20
 
 
@@ -58,8 +58,6 @@ local function OnGossipSelect(event, player, creature, sender, intid, code, menu
         end
     end
     if intid == 3 then
-        fechaFin = datetimeToUnix(fechaFin)
-        print("fechaFin: " .. fechaFin)
         player:SendUnitSay("Adios!", 0)
     end
     player:GossipComplete()
@@ -71,7 +69,6 @@ RegisterCreatureGossipEvent(npcEntry, 2, OnGossipSelect)
 
 local function load()
     fechaFin = datetimeToUnix(fechaFin)
-    -- verificamos si existe una fecha guardada
     local fechaGuardada = cargarVariable(archivo)
     if fechaGuardada then
         fechaInicio = datetimeToUnix(fechaGuardada)
