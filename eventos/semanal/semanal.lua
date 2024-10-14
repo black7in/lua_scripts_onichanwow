@@ -62,9 +62,9 @@ local function OnGossipHello(event, player, creature)
     local msg = "Evento semanal, para ganar solo debes cumplir los siguientes objetivos:\n\n"
     msg = msg .. "Acumular " .. horasObjetivo .. " horas de juego: apartir de ".. unixToDatetime(fechaInicio) ..", hasta " .. unixToDatetime(fechaFin) .. " Calendario del servidor.\n\n"
     if estado == "activo" then
-        msg = msg .. "Si cumples estos requisitos, podrás reclamar tu recompensa aqui\n"
+        msg = msg .. "Si cumples estos requisitos, podrás reclamar tu recompensa aqui.\n\n"
         -- Aqui tenemos un error totaltime no es una fecha es un tiempo en segundos jejeje lo que toca es hacer consulta consultando el nuevo totaltime jejeje y ahi sacar la diferencia
-        local query = CharDBQuery("SELECT totaltime FROM character_promo_semanal WHERE guid = " .. player:GetGUIDLow() .. ";")
+        local query = CharDBQuery("SELECT totaltime FROM characters WHERE guid = " .. player:GetGUIDLow() .. ";")
         local totaltime_actual = 0
         if query then
             local row = query:GetRow()
@@ -87,6 +87,7 @@ local function OnGossipHello(event, player, creature)
         end
         msg = msg .. "Tus horas jugadas: " ..tiempoTranscurridoString(totaltime_actual - data[player:GetGUIDLow()].totaltime, fechaFin) .. "\n"
     end
+
     if estado == "expiro" then
         player:GossipMenuAddItem(0, "Reclamar premio", 0, 1)
     end
