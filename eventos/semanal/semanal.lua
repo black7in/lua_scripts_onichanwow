@@ -89,15 +89,15 @@ local function load()
     fechaFin = variables["FECHA_FIN"]
     fechaInicio = variables["FECHA_INICIO"]
 
-    if fechaInicio then
+    if fechaInicio and fechaInicio ~= "" then
         fechaInicio = datetimeToUnix(fechaInicio)
     end
 
-    if fechaFin then
+    if fechaFin and fechaFin ~= "" then
         fechaFin = datetimeToUnix(fechaFin)
     end
 
-    if fechaFin and fechaInicio then
+    if fechaFin and fechaInicio  and fechaInicio ~= "" and fechaFin ~= "" then
         estado = "activo"
     end
 end
