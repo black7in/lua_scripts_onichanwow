@@ -106,11 +106,15 @@ function cambiarVariableEnv(archivo, clave, nuevoValor)
         local lines = {}
         for line in file:lines() do  -- lee el archivo línea por línea
             print("Leyendo línea: " .. line)  -- imprime la línea que se está leyendo
-            local key = line:match("^(%w+)=")  -- obtiene la clave de la línea
+            local key, value = line:match("^(%w+_?%w*)=(.*)")  -- ajusta la expresión regular para capturar la clave y el valor
             if key == clave then
-                table.insert(lines, clave .. '="' .. nuevoValor .. '"')  -- si la clave coincide, cambia el valor
+                -- Si la clave coincide, cambia el valor
+                local nuevaLinea = clave .. '="' .. nuevoValor .. '"'
+                table.insert(lines, nuevaLinea)
+                print("Cambiada línea a: " .. nuevaLinea)
             else
-                table.insert(lines, line)  -- si no, mantiene la línea original
+                -- Si no, mantiene la línea original
+                table.insert(lines, line)
             end
         end
         file:close()  -- cierra el archivo
