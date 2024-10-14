@@ -8,7 +8,7 @@ local lugar = 1
 
 local tiempo = 0
 
-local tiempoPista = 10000 -- 10 segundos
+local tiempoPista = 60000 -- 60 segundos
 local pistaEnviada = false
 
 local data = {
@@ -57,6 +57,33 @@ local function IniciarEvento(eventid, delay, repeats, player)
     lugar = lugar + 1
 end
 
+local function CargarTeleportCecilia(eventid, delay, repeats, creature)
+    creature:CastSpell(creature, spellOpenPortal, true)
+    creature:SendUnitSay("Me has encontrado! la proxima no sera tan facil jejeje...", 0)
+end
+
+local function TeleportCecilia(eventid, delay, repeats, creature)
+    creature:RemoveEvents()
+    creature:CastSpell(creature, spellTeleport, true)
+    creature:SendUnitSay("Hasta la proxima!", 0)
+    creature:DespawnOrUnsummon(0)
+    if lugar <= #data then
+        local cecilia = PerformIngameSpawn( 1, npcEntry, data[lugar].posicion.map, 0, data[lugar].posicion.x, data[lugar].posicion.y, data[lugar].posicion.z, data[lugar].posicion.o )
+        lugar = lugar + 1
+        estado = "activo"
+    end
+end
+
+local function CambiarLugarOFinalizar(eventid, delay, repeats, creature)
+    if lugar > #data then
+        estado = "inactivo"
+        lugar = 1
+        SendWorldRaidNotification("|CFF00FF00El evento de Buscando a Cecilia ha finalizado|r")
+    else
+        SendWorldMessage("Evento Busqueda: Cecilia se esta moviendo a otro lugar!")  
+    end
+end
+
 
 local function OnGossipHello(event, player, creature)
     player:GossipClearMenu()
@@ -72,7 +99,14 @@ end
 
 local function OnGossipSelect(event, player, creature, sender, intid, code, menuid)
     if intid == 2 then
-        player:SendBroadcastMessage("Recompensa recibida")
+        estado = "cargando"
+        creature:RemoveEvents()
+        player:SendBroadcastMessage("Felicidades! Recompensa recibida")
+        player:AddItem(data[lugar].idPremio, 1)
+        SendWorldMessage("El jugador "..player:GetName().." ha encontrado a Cecilia y ha recibido su recompensa.")
+        creature:RegisterEvent(CambiarLugarOFinalizar, 1000)
+        creature:RegisterEvent(CargarTeleportCecilia, 1000)
+        creature:RegisterEvent(TeleportCecilia, 6500)
     end
     if intid == 3 then
         player:SendBroadcastMessage("Adios! nos vemos en la siguiente parada")
