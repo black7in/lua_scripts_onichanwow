@@ -119,7 +119,6 @@ end
 
 local function OnAIUpdate(event, creature, diff)
     if estado == "activo" then
-        print("Estado activo")
         if not pistaEnviada then
             print("Enviando pista")
             creature:RegisterEvent(EnviarPista, 1000)
