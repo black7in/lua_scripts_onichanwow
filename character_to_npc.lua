@@ -2,8 +2,8 @@ local NpcId = 90023
 local MenuId = 123 -- Unique ID to recognice player gossip menu among others
 
 -- Rango de NPCS previamente creados en la base de datos creature_template
-local entryMax = 70000
-local entryMin = 70010
+local entryMax = 70010
+local entryMin = 70000
 
 -- CONFIGURACION DE LA ROPA
 local casco = 0
