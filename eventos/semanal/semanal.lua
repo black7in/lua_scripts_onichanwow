@@ -16,7 +16,7 @@ local npcEntry = 70002
 local estado = "inactivo"
 
 local fechaInicio
-local fechaFin = "15/10/2023 11:59:59"
+local fechaFin = "15/10/2024 11:59:59"
 local horasObjetivo = 20
 
 
