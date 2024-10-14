@@ -54,7 +54,12 @@ local function OnGossipSelect(event, player, creature, sender, intid, code, menu
             local msg = "|CFF00FF00El evento semanal ha comenzado! Para ganar solo debes cumplir " .. horasObjetivo .. " horas de juego apartir de ahora. El evento finaliza el " .. unixToDatetime(fechaFin) .. ". Buena suerte!|r"
             SendWorldRaidNotification(msg)
             fechaInicio = os.time()
-            guardarVariable(unixToDatetime(fechaInicio), archivo)
+            fechaTabla = os.date("*t", fechaInicio)  -- convierte la fecha a una tabla
+            fechaTabla.day = fechaTabla.day + 5  -- aumenta el día en 5
+            fechaFin = os.time(fechaTabla)  -- convierte la tabla de nuevo a una fecha
+            --guardarVariable(unixToDatetime(fechaInicio), archivo)
+            cambiarVariableEnv(archivo, "FECHA_INICIO", unixToDatetime(fechaInicio))
+            cambiarVariableEnv(archivo, "FECHA_FIN", unixToDatetime(fechaFin))
             estado = "activo"
         end
     end
@@ -84,11 +89,6 @@ local function load()
     if fechaFin and fechaInicio then
         estado = "activo"
     end
-    --local fechaGuardada = cargarVariable(archivo)
-    --if fechaGuardada then
-    --    fechaInicio = datetimeToUnix(fechaGuardada)
-    --    estado = "activo"
-    --end
 end
 
 load()

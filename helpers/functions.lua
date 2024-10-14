@@ -98,3 +98,28 @@ function cargarVariablesEnv(archivo)
         print("Error al abrir el archivo " .. archivo)
     end
 end
+
+function cambiarVariableEnv(archivo, clave, nuevoValor)
+    local file = io.open(archivo, "r")  -- abre el archivo en modo de lectura
+    if file then
+        local lines = {}
+        for line in file:lines() do  -- lee el archivo línea por línea
+            local key = line:match("(%w+)=.*")  -- obtiene la clave de la línea
+            if key == clave then
+                table.insert(lines, clave .. "=" .. nuevoValor)  -- si la clave coincide, cambia el valor
+            else
+                table.insert(lines, line)  -- si no, mantiene la línea original
+            end
+        end
+        file:close()  -- cierra el archivo
+
+        -- Ahora, escribe de nuevo el archivo con las líneas modificadas
+        file = io.open(archivo, "w")  -- abre el archivo en modo de escritura
+        for _, line in ipairs(lines) do
+            file:write(line .. "\n")  -- escribe cada línea en el archivo
+        end
+        file:close()  -- cierra el archivo
+    else
+        print("Error al abrir el archivo " .. archivo)
+    end
+end
