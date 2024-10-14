@@ -71,6 +71,7 @@ local function TeleportCecilia(eventid, delay, repeats, creature)
         local cecilia = PerformIngameSpawn( 1, npcEntry, data[lugar].posicion.map, 0, data[lugar].posicion.x, data[lugar].posicion.y, data[lugar].posicion.z, data[lugar].posicion.o )
         lugar = lugar + 1
         estado = "activo"
+        pistaEnviada = false
     end
 end
 
