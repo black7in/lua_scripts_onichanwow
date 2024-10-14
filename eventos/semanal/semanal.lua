@@ -19,6 +19,8 @@ local fechaInicio
 local fechaFin
 local horasObjetivo = 20
 
+local data = {}
+
 
 local archivo = "/root/server/bin/lua_scripts/eventos/semanal/estado.data"
 
@@ -37,9 +39,36 @@ local function prepararBaseDeDatos(eventid, delay, repeats, creature)
     creature:RemoveEvents()
 end
 
+
 local function OnGossipHello(event, player, creature)
     player:GossipClearMenu()
     verificarEstado()
+    if estado ~= "inactivo" then
+        if not data[player:GetGUIDLow()] then
+            local query = CharDBQuery("SELECT totaltime, premiado FROM character_promo_semanal WHERE guid = " .. player:GetGUIDLow() .. ";")
+            if query then
+                local row = query:GetRow()
+                if row then
+                    data[player:GetGUIDLow()] = {
+                        totaltime = row["totaltime"],
+                        premiado = row["premiado"]
+                    }
+                end
+            end
+        end
+    end
+
+    -- Descripcion del evento
+    local msg = "Evento semanal, para ganar solo debes cumplir los siguientes objetivos:\n\n"
+    msg = msg .. "Acumular " .. horasObjetivo .. " horas de juego: apartir de ".. unixToDatetime(fechaInicio) ..", hasta " .. unixToDatetime(fechaFin) .. " Calendario del servidor.\n\n"
+    if estado == "activo" then
+        msg = msg .. "Si cumples estos requisitos, podrás reclamar tu recompensa aqui\n"
+        msg = msg .. "Tus horas jugadas: " ..tiempoTranscurridoString(data[player:GetGUIDLow()].totaltime) .. "\n"
+    end
+    if estado == "expiro" then
+        msg = msg .. "El evento ha finalizado, puedes reclamar tu premio aqui\n"
+        msg = msg .. "Tus horas jugadas: " ..tiempoTranscurridoEntre(data[player:GetGUIDLow()].totaltime, fechaFin) .. "\n"
+    end
     if estado == "expiro" then
         player:GossipMenuAddItem(0, "Reclamar premio", 0, 1)
     end
@@ -50,7 +79,8 @@ local function OnGossipHello(event, player, creature)
         player:GossipMenuAddItem(0, "Reiniciar evento", 0, 4)
     end
     player:GossipMenuAddItem(0, "Adios", 0, 3)
-    player:GossipSendMenu(1, creature, 0)
+    player:SendGossipText(msg, npcEntry)
+    player:GossipSendMenu(npcEntry, creature)
 end
 
 local function OnGossipSelect(event, player, creature, sender, intid, code, menuid)

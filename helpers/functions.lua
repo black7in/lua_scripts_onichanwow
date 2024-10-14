@@ -140,3 +140,29 @@ function cambiarVariableEnv(archivo, clave, nuevoValor)
         print("Error al abrir el archivo " .. archivo)
     end
 end
+
+function tiempoTranscurridoString(tiempoUnix)
+    local tiempoActual = os.time()
+    local diferencia = tiempoActual - tiempoUnix
+
+    local horas = math.floor(diferencia / 3600)
+    diferencia = diferencia % 3600
+    local minutos = math.floor(diferencia / 60)
+    local segundos = diferencia % 60
+
+    return horas, minutos, segundos
+end
+
+function tiempoTranscurridoEntre(tiempoUnixInicio, tiempoUnixFin)
+    -- Calcula la diferencia en segundos
+    local diferencia = tiempoUnixFin - tiempoUnixInicio
+
+    -- Calcula las horas, minutos y segundos
+    local horas = math.floor(diferencia / 3600)
+    diferencia = diferencia % 3600
+    local minutos = math.floor(diferencia / 60)
+    local segundos = diferencia % 60
+
+    -- Devuelve las horas, minutos y segundos
+    return horas, minutos, segundos
+end
