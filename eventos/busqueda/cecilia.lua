@@ -83,6 +83,7 @@ local cmd = "activar cecilia"
 
 local function OnCommand(event, player, command)
     if command == cmd then
+        player:SendBroadcastMessage("Se ha activado el evento de Cecilia")
         if player:IsGM() and estado == "inactivo" then
             player:SendBroadcastMessage("Se ha activado el evento de Cecilia")
             player:RegisterEvent(IniciarEvento, 1000)
