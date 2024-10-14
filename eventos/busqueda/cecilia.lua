@@ -72,6 +72,7 @@ local function TeleportCecilia(eventid, delay, repeats, creature)
         lugar = lugar + 1
         estado = "activo"
         pistaEnviada = false
+        tiempo = 0
     end
 end
 
