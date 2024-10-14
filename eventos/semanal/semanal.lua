@@ -85,7 +85,7 @@ local function OnGossipHello(event, player, creature)
                 totaltime_actual = row["totaltime"]
             end
         end
-        msg = msg .. "Tus horas jugadas: " ..tiempoTranscurridoEntre(totaltime_actual - data[player:GetGUIDLow()].totaltime, fechaFin) .. "\n"
+        msg = msg .. "Tus horas jugadas: " ..tiempoTranscurridoString(totaltime_actual - data[player:GetGUIDLow()].totaltime, fechaFin) .. "\n"
     end
     if estado == "expiro" then
         player:GossipMenuAddItem(0, "Reclamar premio", 0, 1)
