@@ -70,8 +70,8 @@ local function OnGossipSelect(event, player, creature, sender, intid, code, menu
         player:SendUnitSay("Adios!", 0)
     end
     if intid == 4 then
-        cambiarVariableEnv(archivo, "FECHA_INICIO", nil)
-        cambiarVariableEnv(archivo, "FECHA_FIN", nil)
+        cambiarVariableEnv(archivo, "FECHA_INICIO", "")
+        cambiarVariableEnv(archivo, "FECHA_FIN", "")
         estado = "inactivo"
         player:SendUnitSay("Evento reiniciado", 0)
     end
