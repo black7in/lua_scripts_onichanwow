@@ -18,19 +18,45 @@ local fechaFin = "15/10/2023 11:59:59"
 local horasObjetivo = 20
 
 
+local archivo = "/root/server/bin/lua_scripts/semanal/estado.data"
+
+local function verificarEstado()
+    local fechaActual = os.time()
+    if fechaActual >= fechaFin then -- expiro el tiempo
+        estado = "expiro"
+    end
+end
 
 local function OnGossipHello(event, player, creature)
     player:GossipClearMenu()
-    player:GossipMenuAddItem(0, "Reclamar premio", 0, 1)
+    verificarEstado()
+    if estado == "expiro" then
+        player:GossipMenuAddItem(0, "Reclamar premio", 0, 1)
+    end
+    if player:IsGM() and estado == "inactivo" then
+        player:GossipMenuAddItem(0, "Activar evento", 0, 2)
+    end
+    player:GossipMenuAddItem(0, "Adios", 0, 3)
     player:GossipSendMenu(1, creature, 0)
 end
 
 local function OnGossipSelect(event, player, creature, sender, intid, code, menuid)
     if intid == 1 then
         player:SendBroadcastMessage("Felicidades! Recompensa recibida")
-        player:AddItem(38186, 30)
-        player:AddItem(49426, 10)
-        player:AddItem(47241, 20)
+    end
+    if intid == 2 then
+        if player:IsGM() and estado == "inactivo" then
+            player:SendBroadcastMessage("Se ha activado el evento semanal")
+            local msg = "|CFF00FF00El evento semanal ha comenzado! Para ganar solo debes cumplir " .. horasObjetivo .. " horas de juego apartir de ahora. El evento finaliza el " .. unixToDatetime(fechaFin) .. ". Buena suerte!|r"
+            SendWorldRaidNotification(msg)
+            fechaInicio = os.time()
+            -- guardar fecha
+            guardarVariable(unixToDatetime(fechaInicio), archivo)
+            estado = "activo"
+        end
+    end
+    if intid == 3 then
+        player:SendUnitSay("Adios!", 0)
     end
     player:GossipComplete()
 end
@@ -38,18 +64,15 @@ end
 RegisterCreatureGossipEvent(npcEntry, 1, OnGossipHello)
 RegisterCreatureGossipEvent(npcEntry, 2, OnGossipSelect)
 
-local cmd = "activar semanal"
 
-local function OnCommand(event, player, command)
-    if command == cmd then
-        if player:IsGM() and estado == "inactivo" then
-            estado = "activo"
-            player:SendBroadcastMessage("Se ha activado el evento semanal")
-            local msg = "|CFF00FF00El evento semanal ha comenzado! Para ganar solo debes cumplir " .. horasObjetivo .. " horas de juego apartir de ahora. El evento finaliza el " .. fechaFin .. ". Buena suerte!|r"
-            SendWorldRaidNotification(msg)
-            fechaInicio = os.time()
-            fechaFin = datetimeToUnix(fechaFin)
-        end
-        return false
+local function load()
+    fechaFin = datetimeToUnix(fechaFin)
+    -- verificamos si existe una fecha guardada
+    local fechaGuardada = cargarVariable(archivo)
+    if fechaGuardada then
+        fechaInicio = datetimeToUnix(fechaGuardada)
+        estado = "activo"
     end
-end RegisterPlayerEvent( 42, OnCommand )
+end
+
+load()

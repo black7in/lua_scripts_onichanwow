@@ -54,3 +54,24 @@ function unixToDatetime(unixtime)
 
     return datetime_str
 end
+
+function guardarVariable(variable, archivo)
+    local file = io.open(archivo, "w")  -- abre el archivo en modo de escritura
+    if file then
+        file:write(tostring(variable))  -- escribe el estado en el archivo
+        file:close()  -- cierra el archivo
+    else
+        print("Error al abrir el archivo " .. archivo)
+    end
+end
+
+function cargarVariable(archivo)
+    local file = io.open(archivo, "r")  -- abre el archivo en modo de lectura
+    if file then
+        local fecha = file:read("*a")  -- lee todo el archivo
+        file:close()  -- cierra el archivo
+        return fecha
+    else
+        print("Error al abrir el archivo " .. archivo)
+    end
+end
