@@ -28,7 +28,7 @@ local function verificarEstado()
     local fechaGuardada = cargarVariable(archivo)
 
     if fechaGuardada then
-        fechaInicio = datetimeToUnix(fechaGuardada)
+        local fechaInicio = datetimeToUnix(fechaGuardada)
         estado = "activo"
 
         local fechaActual = os.time()
@@ -40,7 +40,20 @@ end
 
 local function OnGossipHello(event, player, creature)
     player:GossipClearMenu()
-    --verificarEstado()
+    local fechaFinal = datetimeToUnix(fechaFin)
+    -- verificamos si existe una fecha guardada
+    local fechaGuardada = cargarVariable(archivo)
+
+    if fechaGuardada then
+        local fechaInicio = datetimeToUnix(fechaGuardada)
+        estado = "activo"
+
+        local fechaActual = os.time()
+        if fechaActual >= fechaFinal then -- expiro el tiempo
+            estado = "expiro"
+        end
+    end
+
     if estado == "expiro" then
         player:GossipMenuAddItem(0, "Reclamar premio", 0, 1)
     end
