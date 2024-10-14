@@ -40,7 +40,7 @@ end
 
 local function OnGossipHello(event, player, creature)
     player:GossipClearMenu()
-    local fechaFinal = datetimeToUnix(fechaFin)
+    --local fechaFinal = datetimeToUnix(fechaFin)
     -- verificamos si existe una fecha guardada
     local fechaGuardada = cargarVariable(archivo)
 
@@ -49,9 +49,9 @@ local function OnGossipHello(event, player, creature)
         estado = "activo"
 
         local fechaActual = os.time()
-        if fechaActual >= fechaFinal then -- expiro el tiempo
-            estado = "expiro"
-        end
+        --if fechaActual >= fechaFinal then -- expiro el tiempo
+          --  estado = "expiro"
+        --end
     end
 
     if estado == "expiro" then
