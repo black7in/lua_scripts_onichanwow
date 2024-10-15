@@ -21,7 +21,7 @@ local horasObjetivo = 20
 local data = {}
 
 local premios = {
-    { item = 38186, cantidad = 30 },
+    { item = 38186, cantidad = 10 },
     { item = 49426, cantidad = 10 },
     { item = 47241, cantidad = 20 }
 }
@@ -64,10 +64,10 @@ local function OnGossipHello(event, player, creature)
         local cantidad = premios[1].cantidad
         msg = msg .. "Premio 1: "..itemLink.." x"..cantidad.."\n"
         itemLink = GetItemLink( premios[2].item )
-        cantidad = premios[1].cantidad
+        cantidad = premios[2].cantidad
         msg = msg .. "Premio 2: "..itemLink.." x"..cantidad.."\n"
         itemLink = GetItemLink( premios[3].item )
-        cantidad = premios[1].cantidad
+        cantidad = premios[3].cantidad
         msg = msg .. "Premio 3: "..itemLink.." x"..cantidad.."\n"
     end
     if estado == "inactivo" then
@@ -124,9 +124,9 @@ local function OnGossipSelect(event, player, creature, sender, intid, code, menu
         if tiempojugado >= horasObjetivo * 3600 then
             if data[player:GetGUIDLow()].premiado == false then
                 player:SendNotification("Felicidades! Recompensa recibida")
-                --player:AddItem(38186, 30)
-                --player:AddItem(49426, 10)
-                --player:AddItem(47241, 20)
+                for i = 1, #premios do
+                    player:AddItem(premios[i].item, premios[i].cantidad)
+                end
                 CharDBExecute("UPDATE character_promo_semanal SET premiado = TRUE WHERE guid = " .. player:GetGUIDLow() .. ";")
                 data[player:GetGUIDLow()].premiado = true
             else
