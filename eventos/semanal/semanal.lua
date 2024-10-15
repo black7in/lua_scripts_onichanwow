@@ -43,8 +43,14 @@ local function OnGossipHello(event, player, creature)
     end
 
     -- Descripcion del evento
-    local msg = "Evento semanal, para ganar solo debes cumplir los siguientes objetivos:\n\n"
-    msg = msg .. "Acumular " .. horasObjetivo .. " horas de juego.\n\nApartir de: ".. unixToDatetime(fechaInicio) .."\nHasta: " .. unixToDatetime(fechaFin) .. "\nCalendario del servidor.\n\n"
+    local msg = ""
+    if estado ~= "inactivo" then
+        msg = mg .. "Evento semanal, para ganar solo debes cumplir los siguientes objetivos:\n\n"
+        msg = msg .. "Acumular " .. horasObjetivo .. " horas de juego.\n\nApartir de: ".. unixToDatetime(fechaInicio) .."\nHasta: " .. unixToDatetime(fechaFin) .. "\nCalendario del servidor.\n\n"    
+    end
+    if estado == "inactivo" then
+        msg = msg .. "El evento se encuentra inactivo, vuelve mas tarde para ver si ha comenzado."
+    end
     if estado == "activo" then
         msg = msg .. "Si cumples estos requisitos, podrás reclamar tu recompensa aqui.\n\n"
         local totaltime_actual = player:GetTotalPlayedTime()
