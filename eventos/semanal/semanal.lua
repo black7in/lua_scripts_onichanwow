@@ -26,9 +26,12 @@ local archivo = "/root/server/bin/lua_scripts/eventos/semanal/estado.data"
 
 local function verificarEstado()
     local fechaActual = os.time()
-    if fechaFin and fechaFin ~= "" then
+    if fechaFin and fechaFin ~= "" and estado ~= "expiro" then
         if fechaActual >= fechaFin then -- expiro el tiempo
             estado = "expiro"
+            -- guardar el tiempototal con el que finalizo entonces modificar la base de datos
+            -- character_promo_semanal y agregar un campo totaltime_final
+            CharDBExecute("UPDATE character_promo_semanal cps JOIN characters c ON cps.guid = c.guid SET cps.totaltime_final = c.totaltime;;")
         end
     end
 end
