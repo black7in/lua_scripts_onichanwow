@@ -65,7 +65,7 @@ local function OnGossipHello(event, player, creature)
     end
 
     if estado == "expiro" then
-        msg = msg .. "El evento ha finalizado, puedes reclamar tu premio aqui\n"
+        msg = msg .. "El evento ha finalizado, puedes reclamar tu premio aqui\n\n"
         -- Aqui tenemos un error totaltime no es una fecha es un tiempo en segundos jejeje lo que toca es hacer consulta consultando el nuevo totaltime jejeje y ahi sacar la diferencia
         if not data[player:GetGUIDLow()].totaltime_final then
             local query = CharDBQuery("SELECT totaltime_final FROM character_promo_semanal WHERE guid = " .. player:GetGUIDLow() .. ";")
@@ -103,7 +103,22 @@ end
 
 local function OnGossipSelect(event, player, creature, sender, intid, code, menuid)
     if intid == 1 then
-        player:SendBroadcastMessage("Felicidades! Recompensa recibida")
+        -- a estas alturas el jugador si o si esta registrado
+        local tiempojugado = data[player:GetGUIDLow()].totaltime_final - data[player:GetGUIDLow()].totaltime
+        if tiempojugado >= horasObjetivo * 3600 then
+            if data[player:GetGUIDLow()].premiado == false then
+                player:SendBroadcastMessage("Felicidades! Recompensa recibida")
+                --player:AddItem(38186, 30)
+                --player:AddItem(49426, 10)
+                --player:AddItem(47241, 20)
+                CharDBExecute("UPDATE character_promo_semanal SET premiado = TRUE WHERE guid = " .. player:GetGUIDLow() .. ";")
+                data[player:GetGUIDLow()].premiado = true
+            else
+                player:SendBroadcastMessage("Ya has reclamado tu premio")
+            end
+        else
+            player:SendBroadcastMessage("No has cumplido con el objetivo")
+        end        
     end
     if intid == 2 then
         if player:IsGM() and estado == "inactivo" then
@@ -123,7 +138,7 @@ local function OnGossipSelect(event, player, creature, sender, intid, code, menu
         end
     end
     if intid == 3 then
-        player:SendUnitSay("Adios!", 0)
+        creature:SendUnitSay("Adios!", 0)
     end
     if intid == 4 then
         cambiarVariableEnv(archivo, "FECHA_INICIO", "")
