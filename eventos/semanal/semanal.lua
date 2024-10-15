@@ -79,7 +79,7 @@ local function OnGossipHello(event, player, creature)
         if query then
             local row = query:GetRow()
             if row then
-                totaltime_actual = row["totaltime"]
+                totaltime_actual = row["totaltime_final"]
             end
         end
         msg = msg .. "Tus horas jugadas: " ..tiempoFormateado(totaltime_actual - data[player:GetGUIDLow()].totaltime) .. "\n"
