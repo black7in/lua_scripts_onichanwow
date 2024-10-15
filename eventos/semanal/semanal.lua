@@ -74,7 +74,7 @@ local function OnGossipHello(event, player, creature)
     if estado == "expiro" then
         msg = msg .. "El evento ha finalizado, puedes reclamar tu premio aqui\n"
         -- Aqui tenemos un error totaltime no es una fecha es un tiempo en segundos jejeje lo que toca es hacer consulta consultando el nuevo totaltime jejeje y ahi sacar la diferencia
-        local query = CharDBQuery("SELECT totaltime FROM character_promo_semanal WHERE guid = " .. player:GetGUIDLow() .. ";")
+        local query = CharDBQuery("SELECT totaltime_final FROM character_promo_semanal WHERE guid = " .. player:GetGUIDLow() .. ";")
         local totaltime_actual = 0
         if query then
             local row = query:GetRow()
