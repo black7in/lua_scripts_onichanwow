@@ -24,28 +24,8 @@ local data = {}
 
 local archivo = "/root/server/bin/lua_scripts/eventos/semanal/estado.data"
 
-local function verificarEstado()
-    local fechaActual = os.time()
-    if fechaFin and fechaFin ~= "" and estado ~= "expiro" then
-        if fechaActual >= fechaFin then -- expiro el tiempo
-            estado = "expiro"
-            -- guardar el tiempototal con el que finalizo entonces modificar la base de datos
-            -- character_promo_semanal y agregar un campo totaltime_final
-            CharDBExecute("UPDATE character_promo_semanal cps JOIN characters c ON cps.guid = c.guid SET cps.totaltime_final = c.totaltime;;")
-        end
-    end
-end
-
-local function prepararBaseDeDatos(eventid, delay, repeats, creature)
-    CharDBExecute("INSERT INTO character_promo_semanal (guid, totaltime, premiado) SELECT guid, totaltime, FALSE FROM characters;")
-    estado = "activo"
-    creature:RemoveEvents()
-end
-
-
 local function OnGossipHello(event, player, creature)
     player:GossipClearMenu()
-    verificarEstado()
     if estado ~= "inactivo" then
         if not data[player:GetGUIDLow()] then
             local query = CharDBQuery("SELECT totaltime, premiado FROM character_promo_semanal WHERE guid = " .. player:GetGUIDLow() .. ";")
@@ -88,12 +68,18 @@ local function OnGossipHello(event, player, creature)
     if estado == "expiro" then
         player:GossipMenuAddItem(0, "Reclamar premio", 0, 1)
     end
+
+    -- Solo para gms
     if player:IsGM() and estado == "inactivo" then
-        player:GossipMenuAddItem(0, "Activar evento", 0, 2)
+        player:GossipMenuAddItem(0, "Activar evento (Solo admins y encargados de eventos)", 0, 2)
     end
     if player:IsGM() and estado == "expiro" then
-        player:GossipMenuAddItem(0, "Reiniciar evento", 0, 4)
+        player:GossipMenuAddItem(0, "Reiniciar evento (Solo admins y encargados de eventos)", 0, 4)
     end
+    if player:IsGM() and estado == "activo" then
+        player:GossipMenuAddItem(0, "Expirar evento (Solo admins y encargados de eventos)", 0, 5)
+    end	
+    -- hsata aqui fin de solo para gms
     player:GossipMenuAddItem(0, "Adios", 0, 3)
     player:SendGossipText(msg, npcEntry)
     player:GossipSendMenu(npcEntry, creature)
@@ -115,8 +101,8 @@ local function OnGossipSelect(event, player, creature, sender, intid, code, menu
             cambiarVariableEnv(archivo, "FECHA_FIN", unixToDatetime(fechaFin))
             local msg = "|CFF00FF00El evento semanal ha comenzado! Para ganar solo debes cumplir " .. horasObjetivo .. " horas de juego apartir de ahora. El evento finaliza el " .. unixToDatetime(fechaFin) .. ". Buena suerte!|r"
             SendWorldRaidNotification(msg)
-            SaveAllPlayers()
-            creature:RegisterEvent(prepararBaseDeDatos, 1000) -- tiempo para el sistema para guardar los datos de los jugadores
+            CharDBExecute("INSERT INTO character_promo_semanal (guid, totaltime, premiado) SELECT guid, totaltime, FALSE FROM characters;")
+            estado = "activo"
         end
     end
     if intid == 3 then
@@ -131,6 +117,14 @@ local function OnGossipSelect(event, player, creature, sender, intid, code, menu
         CharDBExecute("DELETE FROM character_promo_semanal;")
         data = {}
         creature:SendUnitSay("Evento reiniciado", 0)
+    end
+
+    if intid == 5 then
+        -- guardar el tiempototal con el que finalizo entonces modificar la base de datos
+        -- character_promo_semanal y agregar un campo totaltime_final
+        CharDBExecute("UPDATE character_promo_semanal cps JOIN characters c ON cps.guid = c.guid SET cps.totaltime_final = c.totaltime;;")
+        estado = "expiro"
+        creature:SendUnitSay("Evento expirado", 0)
     end
     player:GossipComplete()
 end
