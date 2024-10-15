@@ -7,7 +7,6 @@
  "\n\nPremio 1: " << sServerSystem->GetItemIcon(38186, 20, 20, 0, -1) << sServerSystem->GetItemLink(38186) << "\nCantidad: " << 30;
  "\n\nPremio 2: " << sServerSystem->GetItemIcon(49426, 20, 20, 0, -1) << sServerSystem->GetItemLink(49426) << "\nCantidad: " << 10;
  "\n\nPremio 3: " << sServerSystem->GetItemIcon(47241, 20, 20, 0, -1) << sServerSystem->GetItemLink(47241) << "\nCantidad: " << 20;
-
 ]]
 require("helpers/functions")
 
@@ -20,6 +19,12 @@ local fechaFin
 local horasObjetivo = 20
 
 local data = {}
+
+local premios = {
+    { item = 38186, cantidad = 30 },
+    { item = 49426, cantidad = 10 },
+    { item = 47241, cantidad = 20 }
+}
 
 
 local archivo = "/root/server/bin/lua_scripts/eventos/semanal/estado.data"
@@ -54,6 +59,11 @@ local function OnGossipHello(event, player, creature)
     if estado ~= "inactivo" then
         msg = msg .. "Evento semanal, para ganar solo debes cumplir los siguientes objetivos:\n\n"
         msg = msg .. "Acumular " .. horasObjetivo .. " horas de juego.\n\nApartir de: ".. unixToDatetime(fechaInicio) .."\nHasta: " .. unixToDatetime(fechaFin) .. "\nCalendario del servidor.\n\n"    
+        msg = msg .. "Recompesas:\n\n"
+        local  itemLink = GetItemLink( premios[1].item )
+        msg = msg .. "Premio 1: "..itemLink.." x10\n"
+        msg = msg .. "Premio 2: Emblema de escarcha x10\n"
+        msg = msg .. "Premio 3: Emblema de triunfo x20\n\n"
     end
     if estado == "inactivo" then
         msg = msg .. "El evento se encuentra inactivo, vuelve mas tarde para ver si ha comenzado."
