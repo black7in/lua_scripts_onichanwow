@@ -38,6 +38,12 @@ local function OnGossipHello(event, player, creature)
                         totaltime_final = row["totaltime_final"]
                     }
                 end
+            else -- sino hay registro entonces el jugador es nuevo y lo insertamos
+                CharDBExecute("INSERT INTO character_promo_semanal (guid, totaltime, premiado) VALUES (" .. player:GetGUIDLow() .. ", 0, FALSE);")
+                data[player:GetGUIDLow()] = {
+                    totaltime = 0,
+                    premiado = false
+                }
             end
         end
     end
@@ -68,6 +74,8 @@ local function OnGossipHello(event, player, creature)
                 if row then
                     data[player:GetGUIDLow()].totaltime_final = row["totaltime_final"]
                 end
+            else -- sino hay registro entonces el jugador es nuevo y lo insertamos
+                data[player:GetGUIDLow()].totaltime_final = 0
             end
         end
         msg = msg .. "Tus horas jugadas: " ..tiempoFormateado(data[player:GetGUIDLow()].totaltime_final - data[player:GetGUIDLow()].totaltime) .. "\n"
