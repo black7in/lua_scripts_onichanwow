@@ -13,7 +13,7 @@ require("helpers/functions")
 
 local npcEntry = 70002
 
-local estado = "inactivo"
+local estado
 
 local fechaInicio
 local fechaFin
@@ -105,6 +105,7 @@ local function OnGossipSelect(event, player, creature, sender, intid, code, menu
             SendWorldRaidNotification(msg)
             CharDBExecute("INSERT INTO character_promo_semanal (guid, totaltime, premiado) SELECT guid, totaltime, FALSE FROM characters;")
             estado = "activo"
+            cambiarVariableEnv(archivo, "ESTADO", "activo")
         end
     end
     if intid == 3 then
@@ -114,6 +115,7 @@ local function OnGossipSelect(event, player, creature, sender, intid, code, menu
         cambiarVariableEnv(archivo, "FECHA_INICIO", "")
         cambiarVariableEnv(archivo, "FECHA_FIN", "")
         estado = "inactivo"
+        cambiarVariableEnv(archivo, "ESTADO", "inactivo")
         fechaInicio = nil
         fechaFin = nil
         CharDBExecute("DELETE FROM character_promo_semanal;")
@@ -126,6 +128,7 @@ local function OnGossipSelect(event, player, creature, sender, intid, code, menu
         -- character_promo_semanal y agregar un campo totaltime_final
         CharDBExecute("UPDATE character_promo_semanal cps JOIN characters c ON cps.guid = c.guid SET cps.totaltime_final = c.totaltime;;")
         estado = "expiro"
+        cambiarVariableEnv(archivo, "ESTADO", "expiro")
         creature:SendUnitSay("Evento expirado", 0)
     end
     player:GossipComplete()
@@ -139,6 +142,7 @@ local function load()
     local variables = cargarVariablesEnv(archivo)
     fechaFin = variables["FECHA_FIN"]
     fechaInicio = variables["FECHA_INICIO"]
+    estado = variables["ESTADO"]
 
     if fechaInicio and fechaInicio ~= "" then
         fechaInicio = datetimeToUnix(fechaInicio)
@@ -148,9 +152,13 @@ local function load()
         fechaFin = datetimeToUnix(fechaFin)
     end
 
-    if fechaFin and fechaInicio  and fechaInicio ~= "" and fechaFin ~= "" then
-        estado = "activo"
+    if not estado or estado == "" then
+        estado = "inactivo"
     end
+
+    --if fechaFin and fechaInicio  and fechaInicio ~= "" and fechaFin ~= "" then
+    --    estado = "activo"
+    --end
 end
 
 load()
