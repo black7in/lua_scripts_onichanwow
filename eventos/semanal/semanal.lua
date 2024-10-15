@@ -108,17 +108,17 @@ local function OnGossipSelect(event, player, creature, sender, intid, code, menu
         local tiempojugado = data[player:GetGUIDLow()].totaltime_final - data[player:GetGUIDLow()].totaltime
         if tiempojugado >= horasObjetivo * 3600 then
             if data[player:GetGUIDLow()].premiado == false then
-                player:SendBroadcastMessage("Felicidades! Recompensa recibida")
+                player:SendNotification("Felicidades! Recompensa recibida")
                 --player:AddItem(38186, 30)
                 --player:AddItem(49426, 10)
                 --player:AddItem(47241, 20)
                 CharDBExecute("UPDATE character_promo_semanal SET premiado = TRUE WHERE guid = " .. player:GetGUIDLow() .. ";")
                 data[player:GetGUIDLow()].premiado = true
             else
-                player:SendBroadcastMessage("Ya has reclamado tu premio")
+                player:SendNotification("Ya has reclamado tu premio")
             end
         else
-            player:SendBroadcastMessage("No has cumplido con el objetivo")
+            player:SendNotification("No has cumplido con el objetivo")
         end        
     end
     if intid == 2 then
