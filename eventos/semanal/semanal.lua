@@ -42,7 +42,8 @@ local function OnGossipHello(event, player, creature)
                 CharDBExecute("INSERT INTO character_promo_semanal (guid, totaltime, premiado) VALUES (" .. player:GetGUIDLow() .. ", 0, FALSE);")
                 data[player:GetGUIDLow()] = {
                     totaltime = 0,
-                    premiado = false
+                    premiado = false,
+                    totaltime_final = 0
                 }
             end
         end
