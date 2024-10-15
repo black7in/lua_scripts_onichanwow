@@ -51,7 +51,7 @@ local function OnGossipHello(event, player, creature)
     -- Descripcion del evento
     local msg = ""
     if estado ~= "inactivo" then
-        msg = mg .. "Evento semanal, para ganar solo debes cumplir los siguientes objetivos:\n\n"
+        msg = msg .. "Evento semanal, para ganar solo debes cumplir los siguientes objetivos:\n\n"
         msg = msg .. "Acumular " .. horasObjetivo .. " horas de juego.\n\nApartir de: ".. unixToDatetime(fechaInicio) .."\nHasta: " .. unixToDatetime(fechaFin) .. "\nCalendario del servidor.\n\n"    
     end
     if estado == "inactivo" then
