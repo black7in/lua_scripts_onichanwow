@@ -28,13 +28,14 @@ local function OnGossipHello(event, player, creature)
     player:GossipClearMenu()
     if estado ~= "inactivo" then
         if not data[player:GetGUIDLow()] then
-            local query = CharDBQuery("SELECT totaltime, premiado FROM character_promo_semanal WHERE guid = " .. player:GetGUIDLow() .. ";")
+            local query = CharDBQuery("SELECT totaltime, premiado, totaltime_final FROM character_promo_semanal WHERE guid = " .. player:GetGUIDLow() .. ";")
             if query then
                 local row = query:GetRow()
                 if row then
                     data[player:GetGUIDLow()] = {
                         totaltime = row["totaltime"],
-                        premiado = row["premiado"]
+                        premiado = row["premiado"],
+                        totaltime_final = row["totaltime_final"]
                     }
                 end
             end
@@ -54,15 +55,16 @@ local function OnGossipHello(event, player, creature)
     if estado == "expiro" then
         msg = msg .. "El evento ha finalizado, puedes reclamar tu premio aqui\n"
         -- Aqui tenemos un error totaltime no es una fecha es un tiempo en segundos jejeje lo que toca es hacer consulta consultando el nuevo totaltime jejeje y ahi sacar la diferencia
-        local query = CharDBQuery("SELECT totaltime_final FROM character_promo_semanal WHERE guid = " .. player:GetGUIDLow() .. ";")
-        local totaltime_actual = 0
-        if query then
-            local row = query:GetRow()
-            if row then
-                totaltime_actual = row["totaltime_final"]
+        if not data[player:GetGUIDLow()].totaltime_final then
+            local query = CharDBQuery("SELECT totaltime_final FROM character_promo_semanal WHERE guid = " .. player:GetGUIDLow() .. ";")
+            if query then
+                local row = query:GetRow()
+                if row then
+                    data[player:GetGUIDLow()].totaltime_final = row["totaltime_final"]
+                end
             end
         end
-        msg = msg .. "Tus horas jugadas: " ..tiempoFormateado(totaltime_actual - data[player:GetGUIDLow()].totaltime) .. "\n"
+        msg = msg .. "Tus horas jugadas: " ..tiempoFormateado(data[player:GetGUIDLow()].totaltime_actual - data[player:GetGUIDLow()].totaltime) .. "\n"
     end
 
     if estado == "expiro" then
