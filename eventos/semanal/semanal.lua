@@ -129,6 +129,7 @@ local function OnGossipSelect(event, player, creature, sender, intid, code, menu
         fechaInicio = nil
         fechaFin = nil
         CharDBExecute("DELETE FROM character_promo_semanal;")
+        data = {}
         creature:SendUnitSay("Evento reiniciado", 0)
     end
     player:GossipComplete()
