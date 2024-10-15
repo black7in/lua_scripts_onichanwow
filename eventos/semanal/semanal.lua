@@ -82,7 +82,7 @@ local function OnGossipHello(event, player, creature)
                 totaltime_actual = row["totaltime"]
             end
         end
-        msg = msg .. "Tus horas jugadas: " ..tiempoTranscurridoString(totaltime_actual - data[player:GetGUIDLow()].totaltime, fechaFin) .. "\n"
+        msg = msg .. "Tus horas jugadas: " ..tiempoFormateado(totaltime_actual - data[player:GetGUIDLow()].totaltime) .. "\n"
     end
 
     if estado == "expiro" then
