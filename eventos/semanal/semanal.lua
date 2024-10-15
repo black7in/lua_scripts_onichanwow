@@ -60,10 +60,15 @@ local function OnGossipHello(event, player, creature)
         msg = msg .. "Evento semanal, para ganar solo debes cumplir los siguientes objetivos:\n\n"
         msg = msg .. "Acumular " .. horasObjetivo .. " horas de juego.\n\nApartir de: ".. unixToDatetime(fechaInicio) .."\nHasta: " .. unixToDatetime(fechaFin) .. "\nCalendario del servidor.\n\n"    
         msg = msg .. "Recompesas:\n\n"
-        local  itemLink = GetItemLink( premios[1].item )
-        msg = msg .. "Premio 1: "..itemLink.." x10\n"
-        msg = msg .. "Premio 2: Emblema de escarcha x10\n"
-        msg = msg .. "Premio 3: Emblema de triunfo x20\n\n"
+        local itemLink = GetItemLink( premios[1].item )
+        local cantidad = premios[1].cantidad
+        msg = msg .. "Premio 1: "..itemLink.." x"..cantidad.."\n"
+        itemLink = GetItemLink( premios[2].item )
+        cantidad = premios[1].cantidad
+        msg = msg .. "Premio 2: "..itemLink.." x"..cantidad.."\n"
+        itemLink = GetItemLink( premios[3].item )
+        cantidad = premios[1].cantidad
+        msg = msg .. "Premio 3: "..itemLink.." x"..cantidad.."\n"
     end
     if estado == "inactivo" then
         msg = msg .. "El evento se encuentra inactivo, vuelve mas tarde para ver si ha comenzado."
