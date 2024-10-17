@@ -29,3 +29,11 @@ local function OnPacketSend(event, packet, player)
 end
 
 RegisterPacketEvent(SMSG_LFG_PROPOSAL_UPDATE, 7, OnPacketSend)
+
+
+
+local function OnCompleteQuest(event, player, quest)
+    print("Player: " .. player:GetName() .. " completed quest: " .. quest:GetId())
+end
+
+RegisterPlayerEvent(54, OnCompleteQuest)
