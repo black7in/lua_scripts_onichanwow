@@ -4,7 +4,6 @@ local function OnPacketSend(event, packet, player)
     local dugeonId = packet:ReadULong()
     local state = packet:ReadUByte()
     if state == 2 then -- esto sucede cuando el jugador acepta la propuesta y su rol, ahora solo es leer la propuesta y el rol xd
-        print("Player name: " .. player:GetName())
         local proposalId = packet:ReadULong()
         local proposalEncounters = packet:ReadULong()
         local silent = packet:ReadUByte()
@@ -12,8 +11,7 @@ local function OnPacketSend(event, packet, player)
         -- hacer un for de 5 
         for i = 1, size do
             local role = packet:ReadULong()
-            print("Role: " .. role)
-            local selfp = packet:ReadUByte()
+            local esPlayer = packet:ReadUByte()
 
             -- unknown
             local unk1 = packet:ReadUByte()
@@ -21,8 +19,11 @@ local function OnPacketSend(event, packet, player)
 
             local answered = packet:ReadUByte()
             local accepted = packet:ReadUByte()
+
+            if esPlayer == true then
+                print("Player name: " .. player:GetName().. " Role: " .. role)
+            end
         end
-        print("--------------------------------------------")
     end
 
 end
