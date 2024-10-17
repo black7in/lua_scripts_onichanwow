@@ -20,7 +20,7 @@ local function OnPacketSend(event, packet, player)
             local answered = packet:ReadUByte()
             local accepted = packet:ReadUByte()
 
-            if esPlayer == true then
+            if esPlayer == 1 then
                 print("Player name: " .. player:GetName().. " Role: " .. role)
             end
         end
