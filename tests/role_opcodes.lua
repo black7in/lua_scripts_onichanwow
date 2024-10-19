@@ -37,7 +37,7 @@ local function OnPacketSend(event, packet, player)
             local accepted = packet:ReadUByte()
 
             if esPlayer == 1 then
-                if role == PLAYER_ROLE_TANK then
+                --[[if role == PLAYER_ROLE_TANK then
                     local group = player:GetGroup()
                     if group then
                         local guid = group:GetGUID()
@@ -68,7 +68,9 @@ local function OnPacketSend(event, packet, player)
                             CharDBExecute("UPDATE lfg_group_reward SET guidHeal = " .. tostring(player:GetGUIDLow()) .. " WHERE groupId = " .. tostring(guid))
                         end
                     end
-                end
+                end]]
+                print("dugeoId: " .. dugeoId)
+                print("instanceId: " .. player:GetInstanceID())
             end
         end
     end
