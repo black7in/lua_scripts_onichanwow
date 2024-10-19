@@ -46,6 +46,7 @@ local function OnPacketSend(event, packet, player)
                                 tank = player:GetGUIDLow(),
                                 heal = 0
                             }
+                            print(guid)
                             CharDBExecute("INSERT INTO lfg_group_reward (groupId, instanceId, guidTank, guidHeal) VALUES (" .. tostring(guid) .. ", 0," .. tostring(player:GetGUIDLow()) .. ", 0)")
                         else
                             cache[guid].tank = player:GetGUIDLow()
