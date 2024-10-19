@@ -124,6 +124,12 @@ end
 local function OnGossipSelect(event, player, creature, sender, intid, code, menuid)
     if (intid == 1) then
         if estadoEvento == "inactivo" then
+            if not player:HasQuest(50012) then
+                player:SendNotification("No tienes la mision activa, no puedes participar.")
+                player:GossipComplete()
+                return
+            end
+
             creature:CastSpell(creature, spellOpenPortal, false)
             creature:RegisterEvent(BuenaSuerte, 2000)
             creature:RegisterEvent(ActivarEvento, 4000) -- Se activa el evento en 4 segundos
