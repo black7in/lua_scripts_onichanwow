@@ -30,10 +30,10 @@ end
 
 RegisterPacketEvent(SMSG_LFG_PROPOSAL_UPDATE, 7, OnPacketSend)
 
-
-
 local function OnCompleteQuest(event, player, quest)
-    print("Player: " .. player:GetName() .. " completed quest: " .. quest:GetId())
+    if quest:GetId() >= 24788 and quest:GetId() <= 24791 then -- Misiones del buscador de mazmorra
+        print("Player: " .. player:GetName() .. " completed quest: " .. quest:GetId())
+    end
 end
 
 RegisterPlayerEvent(54, OnCompleteQuest)
