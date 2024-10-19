@@ -46,10 +46,10 @@ local function OnPacketSend(event, packet, player)
                                 tank = player:GetGUIDLow(),
                                 heal = 0
                             }
-                            CharDBExecute("INSERT INTO lfg_group_reward (groupId, instanceId, guidTank, guidHeal) VALUES (" .. guid .. ", 0," .. tostring(player:GetGUIDLow()) .. ", 0)")
+                            CharDBExecute("INSERT INTO lfg_group_reward (groupId, instanceId, guidTank, guidHeal) VALUES (" .. tostring(guid) .. ", 0," .. tostring(player:GetGUIDLow()) .. ", 0)")
                         else
                             cache[guid].tank = player:GetGUIDLow()
-                            CharDBExecute("UPDATE lfg_group_reward SET guidTank = " .. player:GetGUIDLow() .. " WHERE groupId = " .. guid)
+                            CharDBExecute("UPDATE lfg_group_reward SET guidTank = " .. tostring(player:GetGUIDLow()) .. " WHERE groupId = " .. tostring(guid))
                         end
                     end
                 elseif role == PLAYER_ROLE_HEALER then  
@@ -61,10 +61,10 @@ local function OnPacketSend(event, packet, player)
                                 tank = 0,
                                 heal = player:GetGUIDLow()
                             }
-                            CharDBExecute("INSERT INTO lfg_group_reward (groupId, instanceId, guidTank, guidHeal) VALUES (" .. guid .. ",0,0," .. tostring(player:GetGUIDLow()) .. ")")
+                            CharDBExecute("INSERT INTO lfg_group_reward (groupId, instanceId, guidTank, guidHeal) VALUES (" .. tostring(guid) .. ",0,0," .. tostring(player:GetGUIDLow()) .. ")")
                         else
                             cache[guid].heal = player:GetGUIDLow()
-                            CharDBExecute("UPDATE lfg_group_reward SET guidHeal = " .. player:GetGUIDLow() .. " WHERE groupId = " .. guid)
+                            CharDBExecute("UPDATE lfg_group_reward SET guidHeal = " .. tostring(player:GetGUIDLow()) .. " WHERE groupId = " .. tostring(guid))
                         end
                     end
                 end
@@ -102,7 +102,7 @@ RegisterPlayerEvent(54, OnCompleteQuest)
 local function OnGroupDisband(event, group)
     local guid = group:GetGUID()
     cache[guid] = nil
-    CharDBExecute("DELETE FROM lfg_group_reward WHERE groupId = " .. guid..";")
+    CharDBExecute("DELETE FROM lfg_group_reward WHERE groupId = " .. tostring(guid)..";")
 end
 
 RegisterGroupEvent(5, OnGroupDisband)
