@@ -46,7 +46,7 @@ local function OnPacketSend(event, packet, player)
                                 tank = player:GetGUIDLow(),
                                 heal = 0
                             }
-                            CharDBExecute("INSERT INTO lfg_group_reward (groupId, instanceId, guidTank, guidHeal) VALUES (" .. guid .. ",0," .. player:GetGUIDLow() .. ", 0)")
+                            CharDBExecute("INSERT INTO lfg_group_reward (groupId, instanceId, guidTank, guidHeal) VALUES (" .. guid .. ", 0," .. tostring(player:GetGUIDLow()) .. ", 0)")
                         else
                             cache[guid].tank = player:GetGUIDLow()
                             CharDBExecute("UPDATE lfg_group_reward SET guidTank = " .. player:GetGUIDLow() .. " WHERE groupId = " .. guid)
@@ -61,7 +61,7 @@ local function OnPacketSend(event, packet, player)
                                 tank = 0,
                                 heal = player:GetGUIDLow()
                             }
-                            CharDBExecute("INSERT INTO lfg_group_reward (groupId, instanceId, guidTank, guidHeal) VALUES (" .. guid .. ",0,0," .. player:GetGUIDLow() .. ")")
+                            CharDBExecute("INSERT INTO lfg_group_reward (groupId, instanceId, guidTank, guidHeal) VALUES (" .. guid .. ",0,0," .. tostring(player:GetGUIDLow()) .. ")")
                         else
                             cache[guid].heal = player:GetGUIDLow()
                             CharDBExecute("UPDATE lfg_group_reward SET guidHeal = " .. player:GetGUIDLow() .. " WHERE groupId = " .. guid)
