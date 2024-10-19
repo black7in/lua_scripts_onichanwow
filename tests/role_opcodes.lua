@@ -77,7 +77,7 @@ local function OnPacketSend(event, packet, player)
 
 end
 
-RegisterPacketEvent(SMSG_LFG_PROPOSAL_UPDATE, 7, OnPacketSend)
+ --RegisterPacketEvent(SMSG_LFG_PROPOSAL_UPDATE, 7, OnPacketSend)
 
 local function OnCompleteQuest(event, player, quest)
     if quest:GetId() >= 24788 and quest:GetId() <= 24790 then -- Misiones del buscador de mazmorra
@@ -99,7 +99,7 @@ local function OnCompleteQuest(event, player, quest)
     end
 end
 
-RegisterPlayerEvent(54, OnCompleteQuest)
+-- RegisterPlayerEvent(54, OnCompleteQuest)
 
 
 local function OnGroupDisband(event, group)
@@ -108,4 +108,4 @@ local function OnGroupDisband(event, group)
     CharDBExecute("DELETE FROM lfg_group_reward WHERE groupId = " .. tostring(guid)..";")
 end
 
-RegisterGroupEvent(5, OnGroupDisband)
+-- RegisterGroupEvent(5, OnGroupDisband)
