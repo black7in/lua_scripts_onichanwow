@@ -1,4 +1,20 @@
+--[[
+CREATE TABLE `lfg_group_reward` (
+  `groupId` INT(11) NOT NULL DEFAULT '0',
+  `instanceId` SMALLINT NOT NULL DEFAULT '0',
+  `guidTank` TINYINT NOT NULL DEFAULT '0',
+  `guidHeal` TINYINT NOT NULL DEFAULT '0',
+  PRIMARY KEY (`groupId`)
+) ENGINE=INNODB DEFAULT CHARSET=utf8mb4;
+]]
+
 local SMSG_LFG_PROPOSAL_UPDATE = 0x361
+
+local cache = {}
+
+local PLAYER_ROLE_TANK = 2
+
+local PLAYER_ROLE_HEALER = 4
 
 local function OnPacketSend(event, packet, player) 
     local dugeonId = packet:ReadULong()
@@ -21,7 +37,37 @@ local function OnPacketSend(event, packet, player)
             local accepted = packet:ReadUByte()
 
             if esPlayer == 1 then
-                print("Player name: " .. player:GetName().. " Role: " .. role)
+                if role == PLAYER_ROLE_TANK then
+                    local group = player:GetGroup()
+                    if group then
+                        local guid = group:GetGUID()
+                        if cache[guid] == nil then
+                            cache[guid] = {
+                                tank = player:GetGUIDLow(),
+                                heal = 0
+                            }
+                            CharDBExecute("INSERT INTO lfg_group_reward (groupId, instanceId, guidTank, guidHeal) VALUES (" .. guid .. ",0," .. player:GetGUIDLow() .. ", 0)")
+                        else
+                            cache[guid].tank = player:GetGUIDLow()
+                            CharDBExecute("UPDATE lfg_group_reward SET guidTank = " .. player:GetGUIDLow() .. " WHERE groupId = " .. guid)
+                        end
+                    end
+                elseif role == PLAYER_ROLE_HEALER then  
+                    local group = player:GetGroup()
+                    if group then
+                        local guid = group:GetGUID()
+                        if cache[guid] == nil then
+                            cache[guid] = {
+                                tank = 0,
+                                heal = player:GetGUIDLow()
+                            }
+                            CharDBExecute("INSERT INTO lfg_group_reward (groupId, instanceId, guidTank, guidHeal) VALUES (" .. guid .. ",0,0," .. player:GetGUIDLow() .. ")")
+                        else
+                            cache[guid].heal = player:GetGUIDLow()
+                            CharDBExecute("UPDATE lfg_group_reward SET guidHeal = " .. player:GetGUIDLow() .. " WHERE groupId = " .. guid)
+                        end
+                    end
+                end
             end
         end
     end
@@ -31,9 +77,32 @@ end
 RegisterPacketEvent(SMSG_LFG_PROPOSAL_UPDATE, 7, OnPacketSend)
 
 local function OnCompleteQuest(event, player, quest)
-    if quest:GetId() >= 24788 and quest:GetId() <= 24791 then -- Misiones del buscador de mazmorra
-        print("Player: " .. player:GetName() .. " completed quest: " .. quest:GetId())
+    if quest:GetId() >= 24788 and quest:GetId() <= 24790 then -- Misiones del buscador de mazmorra
+        local group = player:GetGroup()
+        if group then
+            local guid = group:GetGUID()
+            if cache[guid] then
+                local tank = cache[guid].tank
+                local heal = cache[guid].heal
+                if tank == player:GetGUIDLow() then
+                    player:SendNotification("¡Felicidades! Has completado la mazmorra como tanque, recibirás una recompensa especial.")
+                    player:AddItem(20486, 1)
+                elseif heal == player:GetGUIDLow() then
+                    player:SendNotification("¡Felicidades! Has completado la mazmorra como sanador, recibirás una recompensa especial.")
+                    player:AddItem(20486, 1)
+                end
+            end
+        end
     end
 end
 
 RegisterPlayerEvent(54, OnCompleteQuest)
+
+
+local function OnGroupDisband(event, group)
+    local guid = group:GetGUID()
+    cache[guid] = nil
+    CharDBExecute("DELETE FROM lfg_group_reward WHERE groupId = " .. guid..";")
+end
+
+RegisterGroupEvent(5, OnGroupDisband)
