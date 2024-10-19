@@ -69,7 +69,7 @@ local function OnPacketSend(event, packet, player)
                         end
                     end
                 end]]
-                print("dugeoId: " .. dugeoId)
+                print("dugeoId: " .. dugeonId)
                 print("instanceId: " .. player:GetInstanceID())
             end
         end
