@@ -34,6 +34,7 @@ local function OnAIUpdateJinete(event, creature, diff)
         local mensaje = frases_jinete[math.random(1, #frases_jinete)]
         creature:SendUnitSay(mensaje, 0)
         mensajeEnviado = true
+        print("Mensaje enviado")
     end
 
     if tiempo >= tiempoParaMensaje then
