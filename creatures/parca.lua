@@ -19,6 +19,8 @@ local tiempoParaMensaje = 60000 -- 1 minuto para volver a enviar el mensaje
 local mensajeEnviado = false
 
 local function OnAIUpdate(event, creature, diff)
+    if creature:GetMapId() == 0 then return end
+
     if mensajeEnviado == false then
         -- calcular un mensaje aleatorio
         local mensaje = mensajes[math.random(1, #mensajes)]
