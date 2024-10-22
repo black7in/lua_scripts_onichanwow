@@ -1,3 +1,4 @@
+require("helpers/functions")
 local npcEntry = 70000
 
 local archivo = "/root/server/bin/lua_scripts/eventos/50Cuentas/cuentas.data"
