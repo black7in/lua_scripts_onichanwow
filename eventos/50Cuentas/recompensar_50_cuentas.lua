@@ -12,7 +12,7 @@ local function OnGossipHello(event, player, creature)
     player:GossipSendMenu(1, creature)
 end
 
-local function OnGossipSelect(event, player, creature, sender, intid, code)
+local function OnGossipSelect(event, player, creature, sender, intid, code, menu_id)
     if intid == 1 then
         local estadoCuenta = cuentas[player:GetAccountName()]
         if estadoCuenta then
