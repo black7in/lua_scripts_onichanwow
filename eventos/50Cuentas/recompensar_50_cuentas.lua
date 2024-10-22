@@ -20,7 +20,6 @@ end
 
 local function OnGossipSelect(event, player, creature, sender, intid, code, menu_id)
     if intid == 1 then
-        print(player:GetAccountName())
         local estadoCuenta = cuentas[player:GetAccountName()]
         if estadoCuenta then
             if estadoCuenta == "reclamado" then
@@ -36,7 +35,6 @@ local function OnGossipSelect(event, player, creature, sender, intid, code, menu
         end
     end
     if intid == 2 then
-        print("Adios")
         creature:SendUnitSay("Adios", 0)
     end
     player:GossipComplete()
