@@ -32,7 +32,7 @@ local function OnGossipSelect(event, player, creature, sender, intid, code, menu
                 cambiarVariableEnv(archivo, player:GetAccountName(), "reclamado")
             end
         else
-            player:SendUnitSay("Tu cuenta no esta en la lista de las primeras 50 cuentas Registradas.", 0)
+            creature:SendUnitSay("Tu cuenta no esta en la lista de las primeras 50 cuentas Registradas.", 0)
         end
     end
     if intid == 2 then
