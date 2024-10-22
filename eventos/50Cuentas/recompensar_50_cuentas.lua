@@ -29,7 +29,7 @@ local function OnGossipSelect(event, player, creature, sender, intid, code, menu
         end
     end
     if intid == 2 then
-        creature:SendUnitSay("Adios", player)
+        creature:SendUnitSay("Adios", 0)
     end
     player:GossipComplete()
 
