@@ -9,7 +9,7 @@ local function OnGossipHello(event, player, creature)
     player:GossipMenuAddItem(0, "Reclamar mi recompensa", 0, 1)
     -- adios
     player:GossipMenuAddItem(0, "Adios", 2, 0)
-    player:GossipSendMenu(1, creature)
+    player:GossipSendMenu(70000, creature)
 end
 
 local function OnGossipSelect(event, player, creature, sender, intid, code, menu_id)
@@ -29,6 +29,7 @@ local function OnGossipSelect(event, player, creature, sender, intid, code, menu
         end
     end
     if intid == 2 then
+        print("Adios")
         creature:SendUnitSay("Adios", 0)
     end
     player:GossipComplete()
