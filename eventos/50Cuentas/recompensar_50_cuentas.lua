@@ -6,7 +6,7 @@ local cuentas = cargarVariablesEnv(archivo)
 
 local function OnGossipHello(event, player, creature)
     player:GossipClearMenu()
-    player:GossipMenuAddItem(0, "Reclamar mi recompensa", 1, 0)
+    player:GossipMenuAddItem(0, "Reclamar mi recompensa", 0, 1)
     -- adios
     player:GossipMenuAddItem(0, "Adios", 2, 0)
     player:GossipSendMenu(1, creature)
