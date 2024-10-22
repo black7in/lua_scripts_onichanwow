@@ -45,3 +45,9 @@ end
 RegisterCreatureGossipEvent(npcEntry, 1, OnGossipHello)
 RegisterCreatureGossipEvent(npcEntry, 2, OnGossipSelect)
 
+
+local function OnSpawn(event, creature)
+    creature:SetScale(2)
+end
+
+RegisterCreatureEvent(npcEntry, 5, OnSpawn)
