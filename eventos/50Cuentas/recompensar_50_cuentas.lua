@@ -20,12 +20,13 @@ end
 
 local function OnGossipSelect(event, player, creature, sender, intid, code, menu_id)
     if intid == 1 then
+        print(player:GetAccountName())
         local estadoCuenta = cuentas[player:GetAccountName()]
         if estadoCuenta then
             if estadoCuenta == "reclamado" then
-                player:SendUnitSay("Ya has reclamado tu recompensa.", 0)
+                creature:SendUnitSay("Ya has reclamado tu recompensa.", 0)
             else
-                player:SendUnitSay("Felicidades, has reclamado tu recompensa.", 0)
+                creature:SendUnitSay("Felicidades, has reclamado tu recompensa.", 0)
                 player:AddItem(19429, 1)
                 cuentas[player:GetAccountName()] = "reclamado"
                 cambiarVariableEnv(archivo, player:GetAccountName(), "reclamado")
