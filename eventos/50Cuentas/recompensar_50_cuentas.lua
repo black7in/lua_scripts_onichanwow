@@ -8,7 +8,7 @@ local function OnGossipHello(event, player, creature)
     player:GossipClearMenu()
     player:GossipMenuAddItem(0, "Reclamar mi recompensa", 0, 1)
     -- adios
-    player:GossipMenuAddItem(0, "Adios", 2, 0)
+    player:GossipMenuAddItem(0, "Adios", 0, 2)
 
     local msg = "Hola, soy el NPC de las 50 cuentas, ¿Quieres reclamar tu premio?\n\n"
     msg = msg .. "Solo las primeras 50 cuentas registradas en el servidor pueden reclamar su premio.\n\n"
